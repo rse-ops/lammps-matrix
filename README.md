@@ -1,4 +1,4 @@
-# LAAMPS Matrix
+# LAMMPS Matrix
 
 Testing builds of lammps across a few:
 
