@@ -1,0 +1,125 @@
+name: build lammps matrix
+
+on:
+  pull_request: []
+  push:
+    branches:
+      - main
+
+jobs:
+  build-containers:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        tag: ["8", "9", "20.04", "22.04"]
+        test:           
+          # Note that rocky 8 doesn't have support for additional platforms
+          - ["intel-mpi-rocky", "8", "linux/amd64"]
+          - ["intel-mpi-rocky", "9", "linux/amd64"]
+          - ["intel-mpi-rocky", "9", "linux/arm64"]
+          - ["intel-mpi-rocky", "9", "linux/ppc64le"]
+          - ["openmpi-ubuntu", "20.04", "linux/amd64"]
+          - ["openmpi-ubuntu", "20.04", "linux/arm64"]
+          - ["openmpi-ubuntu", "20.04", "linux/ppc64le"]
+          - ["openmpi-ubuntu", "22.04", "linux/amd64"]
+          - ["openmpi-ubuntu", "22.04", "linux/arm64"]
+          - ["openmpi-ubuntu", "22.04", "linux/ppc64le"]
+          - ["openmpi-ubuntu-gpu", "22.04", "linux/amd64"]
+          - ["openmpi-ubuntu-gpu", "22.04", "linux/arm64"]
+          - ["openmpi-ubuntu-gpu", "22.04", "linux/ppc64le"]
+          - ["mpich-ubuntu", "20.04", "linux/amd64"]
+          - ["mpich-ubuntu", "20.04", "linux/arm64"]
+          - ["mpich-ubuntu", "20.04", "linux/ppc64le"]
+          - ["mpich-ubuntu", "22.04", "linux/amd64"]
+          - ["mpich-ubuntu", "22.04", "linux/arm64"]
+          - ["mpich-ubuntu", "22.04", "linux/ppc64le"]
+
+    name: ${{ matrix.test[0] }}-${{ matrix.test[1] }}-${{ matrix.test[2] }}
+    steps:
+    - name: Clone the code
+      uses: actions/checkout@v4
+
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v37
+
+    - name: Setup Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: ^1.20
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+      with:
+        platforms: ${{ matrix.platform }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: GHCR Login
+      if: (github.event_name != 'pull_request')
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Define container name
+      env:
+        uri: ${{ matrix.test[0] }}
+        tag: ${{ matrix.test[1] }}
+        arch: ${{ matrix.test[2] }}
+      run: |
+        arch=$(python -c "print('${arch}'.split('/')[1])")
+        container=ghcr.io/rse-ops/lammps-matrix:${uri}-${tag}-${arch}
+        echo "container=${container}" >> $GITHUB_ENV
+      
+    - name: Pull Layers (if exist)
+      env:
+        container: ${{ env.container }}
+      run: docker pull ${container} || echo "${container} not pushed yet"
+
+    - name: Make Space For Build
+      run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+
+    - name: Build Container
+      env:
+        context: ${{ matrix.test[0] }}
+        container: ${{ env.container }}
+        tag: ${{ matrix.test[1] }}
+      run: |
+        cd ${context}
+        dockerfile=$(realpath Dockerfile)        
+        dobuild="no"
+        cd -
+        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            file=$(realpath $file)
+            echo "Looking at changed file ${file}"
+            if [[ "$file" == "$dockerfile" ]]; then
+              echo "$file was changed and warrants build"
+              cd ${context}
+              dobuild="yes"
+            fi
+            # Exit after we have found the match
+            if [[ "$dobuild" == "yes" ]]; then
+              break
+            fi
+        done
+        echo "dobuild=${dobuild}" >> $GITHUB_ENV
+
+      if: (env.dobuild == 'yes')
+    - name: Build and Deploy
+      id: build
+      uses: docker/build-push-action@v3
+      with:
+        context: ${{ matrix.test[0] }}
+        push: ${{ github.event_name != 'pull_request' }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        platforms: ${{ matrix.test[2] }}
+        tags: |
+          ${{ env.container }}
