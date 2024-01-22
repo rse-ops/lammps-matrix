@@ -1,6 +1,7 @@
 ARG tag="22.04"
 FROM nvidia/cuda:12.2.0-devel-ubuntu${tag}
 
+ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH=/usr/local/bin:$PATH
 
 WORKDIR /opt
