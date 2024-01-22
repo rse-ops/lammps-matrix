@@ -15,8 +15,8 @@ jobs:
         test:           
           # Note that rocky 8 doesn't have support for additional platforms
           - ["intel-mpi-rocky", "8", "linux/amd64"]
+          - ["intel-mpi-rocky", "9", "linux/amd64"]
           # Debug on an aws instance or locally
-          # - ["intel-mpi-rocky", "9", "linux/amd64"]
           # - ["intel-mpi-rocky", "9", "linux/arm64"]
           - ["openmpi-ubuntu", "20.04", "linux/amd64"]
           - ["openmpi-ubuntu", "20.04", "linux/arm64"]
