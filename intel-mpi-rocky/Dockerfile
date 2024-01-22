@@ -41,7 +41,7 @@ RUN yum -y update \
  && yum clean all
 
 #  Set default /usr/bin/python to python3
-RUN alternatives --set python /usr/bin/python3
+RUN alternatives --set python /usr/bin/python3 || true
 
 ENV LANG=C.UTF-8
 RUN printf "LANG=C.UTF-8" > /etc/locale.conf
