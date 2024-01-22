@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #  Enable PowerTools for development packages
 RUN yum -y update \
  && dnf -y install 'dnf-command(config-manager)' \
- && yum config-manager --set-enabled powertools \
+ && yum config-manager --set-enabled powertools || dnf config-manager --enable crb \
  && yum -y update \
  && yum -y install epel-release \
  && yum -y install \
@@ -14,7 +14,6 @@ RUN yum -y update \
         fftw-devel \
         fftw \
 	git \
-	curl \
 	bind-utils \
 	sudo \
 	jq \

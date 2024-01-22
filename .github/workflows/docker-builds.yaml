@@ -12,22 +12,23 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tag: ["8", "9", "20.04", "22.04"]
         test:           
           # Note that rocky 8 doesn't have support for additional platforms
           - ["intel-mpi-rocky", "8", "linux/amd64"]
           - ["intel-mpi-rocky", "9", "linux/amd64"]
-          - ["intel-mpi-rocky", "9", "linux/arm64"]
-          - ["intel-mpi-rocky", "9", "linux/ppc64le"]
+          # Debug on an aws instance or locally
+          # - ["intel-mpi-rocky", "9", "linux/arm64"]
           - ["openmpi-ubuntu", "20.04", "linux/amd64"]
           - ["openmpi-ubuntu", "20.04", "linux/arm64"]
           - ["openmpi-ubuntu", "20.04", "linux/ppc64le"]
           - ["openmpi-ubuntu", "22.04", "linux/amd64"]
           - ["openmpi-ubuntu", "22.04", "linux/arm64"]
           - ["openmpi-ubuntu", "22.04", "linux/ppc64le"]
-          - ["openmpi-ubuntu-gpu", "22.04", "linux/amd64"]
-          - ["openmpi-ubuntu-gpu", "22.04", "linux/arm64"]
-          - ["openmpi-ubuntu-gpu", "22.04", "linux/ppc64le"]
+          # To be built on larger fs machines
+          #- ["openmpi-ubuntu-gpu", "22.04", "linux/amd64"]
+          #- ["openmpi-ubuntu-gpu", "22.04", "linux/arm64"]
+          #- ["openmpi-ubuntu-gpu", "20.04", "linux/amd64"]
+          #- ["openmpi-ubuntu-gpu", "20.04", "linux/arm64"]
           - ["mpich-ubuntu", "20.04", "linux/amd64"]
           - ["mpich-ubuntu", "20.04", "linux/arm64"]
           - ["mpich-ubuntu", "20.04", "linux/ppc64le"]
@@ -39,15 +40,6 @@ jobs:
     steps:
     - name: Clone the code
       uses: actions/checkout@v4
-
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v37
-
-    - name: Setup Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: ^1.20
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
@@ -85,33 +77,9 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
-    - name: Build Container
-      env:
-        context: ${{ matrix.test[0] }}
-        container: ${{ env.container }}
-        tag: ${{ matrix.test[1] }}
-      run: |
-        cd ${context}
-        dockerfile=$(realpath Dockerfile)        
-        dobuild="no"
-        cd -
-        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            file=$(realpath $file)
-            echo "Looking at changed file ${file}"
-            if [[ "$file" == "$dockerfile" ]]; then
-              echo "$file was changed and warrants build"
-              cd ${context}
-              dobuild="yes"
-            fi
-            # Exit after we have found the match
-            if [[ "$dobuild" == "yes" ]]; then
-              break
-            fi
-        done
-        echo "dobuild=${dobuild}" >> $GITHUB_ENV
-
-      if: (env.dobuild == 'yes')
     - name: Build and Deploy
       id: build
       uses: docker/build-push-action@v3
@@ -121,5 +89,7 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
         platforms: ${{ matrix.test[2] }}
+        build-args: |
+          tag=${{ matrix.test[1] }}
         tags: |
           ${{ env.container }}
