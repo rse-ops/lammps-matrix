@@ -84,7 +84,7 @@ jobs:
           sudo rm -rf /usr/local/share/boost
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
-    - name: Build Container
+    - name: Check Container
       env:
         context: ${{ matrix.test[0] }}
       run: |
