@@ -41,6 +41,10 @@ jobs:
     - name: Clone the code
       uses: actions/checkout@v4
 
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v37
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
       with:
@@ -80,7 +84,30 @@ jobs:
           sudo rm -rf /usr/local/share/boost
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
+    - name: Build Container
+      env:
+        context: ${{ matrix.test[0] }}
+      run: |
+        cd ${context}
+        dockerfile=$(realpath Dockerfile)        
+        dobuild="no"
+        cd -
+        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            file=$(realpath $file)
+            echo "Looking at changed file ${file}"
+            if [[ "$file" == "$dockerfile" ]]; then
+              echo "$file was changed and warrants build"
+              dobuild="yes"
+            fi
+            # Exit after we have found the match
+            if [[ "$dobuild" == "yes" ]]; then
+              break
+            fi
+        done
+        echo "dobuild=${dobuild}" >> $GITHUB_ENV
+
     - name: Build and Deploy
+      if: (env.dobuild == 'yes')
       id: build
       uses: docker/build-push-action@v3
       with:
