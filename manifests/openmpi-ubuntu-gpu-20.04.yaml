@@ -1,0 +1,13 @@
+image: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu
+tags: ["openmpi-ubuntu-gpu-20.04"]
+manifests:
+  -
+    image: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-20.04-arm64
+    platform:
+      architecture: arm64
+      os: linux
+  -
+    image: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-20.04-amd64
+    platform:
+      architecture: amd64
+      os: linux

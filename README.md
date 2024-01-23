@@ -11,9 +11,16 @@ Testing builds of lammps across a few:
 Note that we take the following approach:
 
 1. Build the containers separately, one per arch, to fit into GitHub actions. This is done via the workflow [.github/workflows/docker-builds.yaml](.github/workflows/docker-builds.yaml)
-2. Use a custom tool to emulate the image selection process that is normally done by a container runtime. The reason is because we want to inject randomness - a registry will typically deliver a manifest list, and then the runtime chooses the first match. This doesn't give very interesting experiment results, so instead we are going to select based on platform (what the registry does) and then randomly choose from that set. 
+2. Extract metadata and put into artifacts we can associate with the images. This is currently provided in a `compspec.json` alongside each image. Ideally this would be extracted at build time (in CI) or by static analysis later. Since this is a fairly simple setup, I'm creating this manually for now.
+3. Use a custom tool to emulate the image selection process that is normally done by a container runtime. The reason is because we want to inject randomness - a registry will typically deliver a manifest list, and then the runtime chooses the first match. This doesn't give very interesting experiment results, so instead we are going to select based on platform (what the registry does) and then randomly choose from that set. 
 
 Note that if you are interested in the assembled manifest images, we have prepared them, and you can see those specs in [manifests](manifests).
+
+TODO:
+
+ - try an automated extraction (interactive or static?) to generate compspec.json
+ - push them into an artifact
+ - make a list of image URIs and associated artifacts for the compspec-go tool.
 
 ## Vision
 
