@@ -1,5 +1,5 @@
 image: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu
-tags: ["20.04"]
+tags: ["mpich-ubuntu-20.04"]
 manifests:
   -
     image: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-ppc64le

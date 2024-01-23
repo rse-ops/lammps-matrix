@@ -1,8 +1,6 @@
 ARG tag="8"
 FROM rockylinux:${tag} as builder
 
-ENV DEBIAN_FRONTEND=noninteractive
-
 #  Enable PowerTools for development packages
 RUN yum -y update \
  && dnf -y install 'dnf-command(config-manager)' \

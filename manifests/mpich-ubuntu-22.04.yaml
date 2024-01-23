@@ -1,5 +1,5 @@
 image: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu
-tags: ["22.04"]
+tags: ["mpich-ubuntu-22.04"]
 manifests:
   -
     image: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-ppc64le
