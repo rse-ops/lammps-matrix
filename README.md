@@ -2,19 +2,35 @@
 
 Testing builds of lammps across a few:
 
- - MPI implementations
- - OS and versions
- - architectures
+ - MPI implementations (openmpi, mpich, intel-mpi)
+ - OS and versions (ubuntu, rocky, and different versions)
+ - architectures (arm64 and amd64)
+
+This is a small set of builds in retrospect, but I'm hopeful will be enough for a proof of concept.
 
 ## Strategy
  
 Note that we take the following approach:
 
-1. Build the containers separately, one per arch, to fit into GitHub actions. This is done via the workflow [.github/workflows/docker-builds.yaml](.github/workflows/docker-builds.yaml) and (for arm) via [local-builds.sh](local-builds.sh)
-2. Extract metadata and put into artifacts we can associate with the images. This happens with the build steps, and gets pushed to the same registry with `-compsec` appended to the tag.
-3. Use a custom tool to emulate the image selection process that is normally done by a container runtime. The reason is because we want to inject randomness - a registry will typically deliver a manifest list, and then the runtime chooses the first match. This doesn't give very interesting experiment results, so instead we are going to select based on platform (what the registry does) and then randomly choose from that set. 
+1. Build the containers separately, one per arch, on AWS VMs. I originally was using GitHub actions but wanted consistency of build environment for each architecture. This was previously done via the workflow [.github/workflows/docker-builds.yaml](.github/workflows/docker-builds.yaml) and now is done in the build subdirectories.
+2. Extract metadata with [compspec-go](https://github.com/supercontainers/compspec-go) and put into artifacts we can associate with the images. This gets pushed to the same registry with `-compsec` appended to the tag.
+3. Use a custom tool to emulate the image selection process that is normally done by a container runtime. The reason is because we want to inject randomness - a registry will typically deliver a manifest list, and then the runtime chooses the first match. This doesn't give very interesting experiment results, so instead we are going to select based on platform (what the registry does) and then randomly choose from that set.  This will be done with the same tool (but not here).
 
 Note that our tool is implemented at [supercontainers/compspec-go](https://github.com/supercontainers/compspec-go). We also have a directory of [manifests](manifests) that show how to use the manifest-tool to generate actually (multi-platform) manifests. We can't use this approach yet because the compatibility artifact working group has not finished work (and there is no representation of compatibility there).
+
+## Preparing Images
+
+ - See [build-arm](build-arm) for instructions.
+
+## Matrices
+
+See the subdirectories for testing builds. Our final set of images + artifacts are in [manifests.yaml](manifests.yaml)
+
+ - [build-test](build-test): prototyping
+ - [build-arm](build-arm): builds for arm
+ - [build-amd](build-amd): builds for amd (x86_64)
+
+The final images and matched artifacts are in [manifests.yaml](manifests.yaml). We will next prototype the experiment setup using compspec-go.
 
 ## Vision
 
@@ -40,62 +56,6 @@ When we have a production compatibility specification, it will be defined and pa
 2. Ask the registry for an image URI via a container runtime
 4. The registry links compatibility metadata with each image
 5. The container runtime uses the compatibility metadata to select the best image.
-
-## Preparing Images
-
- - See [build-arm](build-arm) for instructions.
-
-## Matrices
-
-### Builds
-
-Here is our matrix of original builds (separated into different images for easier building). We should review this matrix (and what we want to use for our experiment, and determine if a combination is missing). Some are not done or hard, e.g., [intel-mpi](https://github.com/GoogleCloudPlatform/hpc-tools/issues/4) installed with hpc-tools does not have support for ARM). There are likely ways to build the missing entries in the matrix if we decide they are important.
-
-| Image               | Architecture | OS    | OS Version | MPI     | MPI version | GPU |
-|---------------------|--------------|-------|------------|---------|-------------|-----|
-| [intel-mpi-rocky](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169779744?tag=intel-mpi-rocky-8-amd64)     | linux/amd64  | rocky | 8          |intel-mpi|             | no  |
-| [intel-mpi-rocky](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169782781?tag=intel-mpi-rocky-9-amd64)     | linux/amd64  | rocky | 9          |intel-mpi|             | no  |
-| [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169782423?tag=openmpi-ubuntu-20.04-amd64)      | linux/amd64  | ubuntu| 20.04      | openmpi |             | no  |
-| [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169792857?tag=openmpi-ubuntu-20.04-arm64)      | linux/arm64  | ubuntu| 20.04      | openmpi |             | no  |
-| [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169810547?tag=openmpi-ubuntu-20.04-ppc64le)      | linux/ppc64le| ubuntu| 20.04      | openmpi |             | no  |
-| [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169782169?tag=openmpi-ubuntu-22.04-amd64)      | linux/amd64  | ubuntu| 22.04      | openmpi |             | no  |
-| [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169809314?tag=openmpi-ubuntu-22.04-arm64)    | linux/arm64  | ubuntu| 22.04      | openmpi |             | no  |
-| [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169809649?tag=openmpi-ubuntu-22.04-ppc64le)      | linux/ppc64le| ubuntu| 22.04      | openmpi |             | no  |
-| [openmpi-ubuntu-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169858346?tag=openmpi-ubuntu-gpu-20.04-amd64)  | linux/amd64  | ubuntu| 20.04      | openmpi |             | yes |
-| [openmpi-ubuntu-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169812970?tag=openmpi-ubuntu-gpu-22.04-amd64)  | linux/amd64  | ubuntu| 22.04      | openmpi |             | yes |
-| [openmpi-ubuntu-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169878136?tag=openmpi-ubuntu-gpu-20.04-arm64)  | linux/arm64  | ubuntu| 20.04      | openmpi |             | yes |
-| [openmpi-ubuntu-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169880385?tag=openmpi-ubuntu-gpu-22.04-arm64)  | linux/arm64  | ubuntu| 22.04      | openmpi |             | yes |
-| [openmpi-rocky-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169886720?tag=openmpi-rocky-gpu-9-arm64)  | linux/arm64  | rocky | 9      | openmpi |             | yes |
-| [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169781948?tag=mpich-ubuntu-20.04-amd64)        | linux/amd64  | ubuntu| 20.04      | mpich   |             | no  |
-| [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169810873?tag=mpich-ubuntu-20.04-arm64)        | linux/arm64  | ubuntu| 20.04      | mpich   |             | no  |
-| [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169810274?tag=mpich-ubuntu-20.04-ppc64le)        | linux/ppc64le| ubuntu| 20.04      | mpich   |             | no  |
-| [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169782384?tag=mpich-ubuntu-22.04-amd64)        | linux/amd64  | ubuntu| 22.04      | mpich   |             | no  |
-| [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169814135?tag=mpich-ubuntu-22.04-arm64)        | linux/arm64  | ubuntu| 22.04      | mpich   |             | no  |
-| [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169814902?tag=mpich-ubuntu-22.04-ppc64le)        | linux/ppc64le| ubuntu| 22.04      | mpich   |             | no  |
-
-You can find these container builds [here](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix).
-More are coming soon, I mostly just need to do the builds / write the Dockerfile (or think of the combination).
-
-### Combined Builds
-
-These are (when appropriate) combined into single manifests, meaning we have three architectures.
-
-| Image               | Architecture | OS    | OS Version | MPI     | MPI version | GPU |
-|---------------------|--------------|-------|------------|---------|-------------|-----|
-| [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169858124?tag=mpich-ubuntu-20.04)    | arm64,amd64,ppc64le | ubuntu | 20.04 | mpich | | no |    
-| [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169858137?tag=mpich-ubuntu-22.04)    | arm64,amd64,ppc64le | ubuntu | 22.04 | mpich | | no |    
-| [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169857305?tag=openmpi-ubuntu-20.04)    | arm64,amd64,ppc64le | ubuntu | 20.04 | openmpi | | no |    
-| [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169857680?tag=openmpi-ubuntu-22.04)    | arm64,amd64,ppc64le | ubuntu | 22.04 | openmpi | | no |    
-| [openmpi-ubuntu-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169881124?tag=openmpi-ubuntu-gpu-20.04)    | arm64,amd64 | ubuntu | 20.04 | openmpi | | yes |    
-| [openmpi-ubuntu-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169881107?tag=openmpi-ubuntu-gpu-22.04)    | arm64,amd64 | ubuntu | 22.04 | openmpi | | yes |    
-
-
-## Next Steps
-
-- **Extraction of metadata**: into a JSON blob that conforms to our [prototype spec](https://github.com/supercontainers/compspec),one associated per URI (undecided if I should automate this given the potential need to extract or shell, I'm hoping I can do something statically but might just make them manually for this first shot since we know most of the metadata).
-- **Generation of artifacts**: and push to an OCI registry with ORAS.
-- **Command Line Tool**: to assist with image selection based on paired images and their metadata, and in a basic or descriptive mode.
-
 
 ## License
 

@@ -50,4 +50,7 @@ RUN git clone  https://github.com/lammps/lammps.git && \
     make -j && \
     make install       
 
+# For some reason mpi isn't on the path...
+ENV PATH=$PATH:/usr/lib64/openmpi/bin
+
 ENTRYPOINT ["lmp_gpu"]

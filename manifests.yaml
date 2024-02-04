@@ -1,0 +1,35 @@
+# manifest.yaml is a matching of image URI to artifact URI
+# We have 8 arm64 and 8 amd64 builds, with/without gpu, openmpi, mpich, rocky and ubuntu
+images:
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-22.04-arm64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-22.04-arm64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-20.04-arm64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-20.04-arm64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64
+    artifact: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64
+    artifact: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-22.04-arm64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-22.04-arm64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-20.04-arm64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-20.04-arm64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-rocky-gpu-9-arm64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-rocky-gpu-9-arm64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-rocky-gpu-8-arm64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-rocky-gpu-8-arm64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-22.04-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-22.04-amd64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-amd64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-20.04-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-20.04-amd64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-amd64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:intel-mpi-rocky-9-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:intel-mpi-rocky-9-amd64-compsec
+  - name: ghcr.io/rse-ops/lammps-matrix:intel-mpi-rocky-8-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:intel-mpi-rocky-8-amd64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-20.04-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-20.04-amd64-comspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-22.04-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-22.04-amd64-compspec
