@@ -103,12 +103,13 @@ for version in 8 9; do
     cmd=". /etc/profile && /tmp/data/generate.sh $hasGpu /tmp/data/specs/compspec-${tag}.json"
     docker run --entrypoint bash -v $PWD:/tmp/data -it ${image} -c "$cmd"
     oras push ${image}-compspec --artifact-type application/org.supercontainers.compspec ./specs/compspec-${tag}.json:application/org.supercontainers.compspec
+
 done
 ```
 
 ## Builds
 
-Here are the final builds (with artifacts each) for the above.
+Here are the final builds (with artifacts each) for the above. Note that the links might have changed, I didn't go through them again.
 
 | Image               | Architecture | OS    | OS Version | MPI     | MPI version | GPU |
 |---------------------|--------------|-------|------------|---------|-------------|-----|
@@ -116,6 +117,8 @@ Here are the final builds (with artifacts each) for the above.
 | [intel-mpi-rocky](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169782781?tag=intel-mpi-rocky-9-amd64)            | linux/amd64  | rocky | 9          |intel-mpi|             | no  |
 | [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169782423?tag=openmpi-ubuntu-20.04-amd64)          | linux/amd64  | ubuntu| 20.04      | openmpi |             | no  |
 | [openmpi-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169782169?tag=openmpi-ubuntu-22.04-amd64)          | linux/amd64  | ubuntu| 22.04      | openmpi |             | no  |
+| [openmpi-rocky-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169858346?tag=openmpi-rocky-gpu-8-amd64)        | linux/amd64  | rocky  | 8         | openmpi |             | yes |
+| [openmpi-rocky-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169812970?tag=openmpi-rocky-gpu-9-amd64)        | linux/amd64  | rocky  | 9         | openmpi |             | yes |
 | [openmpi-ubuntu-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169858346?tag=openmpi-ubuntu-gpu-20.04-amd64)  | linux/amd64  | ubuntu| 20.04      | openmpi |             | yes |
 | [openmpi-ubuntu-gpu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169812970?tag=openmpi-ubuntu-gpu-22.04-amd64)  | linux/amd64  | ubuntu| 22.04      | openmpi |             | yes |
 | [mpich-ubuntu](https://github.com/rse-ops/lammps-matrix/pkgs/container/lammps-matrix/169781948?tag=mpich-ubuntu-20.04-amd64)              | linux/amd64  | ubuntu| 20.04      | mpich   |             | no  |
