@@ -10,21 +10,15 @@ Testing builds of lammps across a few:
  
 Note that we take the following approach:
 
-1. Build the containers separately, one per arch, to fit into GitHub actions. This is done via the workflow [.github/workflows/docker-builds.yaml](.github/workflows/docker-builds.yaml)
-2. Extract metadata and put into artifacts we can associate with the images. This is currently provided in a `compspec.json` alongside each image. Ideally this would be extracted at build time (in CI) or by static analysis later. Since this is a fairly simple setup, I'm creating this manually for now.
+1. Build the containers separately, one per arch, to fit into GitHub actions. This is done via the workflow [.github/workflows/docker-builds.yaml](.github/workflows/docker-builds.yaml) and (for arm) via [local-builds.sh](local-builds.sh)
+2. Extract metadata and put into artifacts we can associate with the images. This happens with the build steps, and gets pushed to the same registry with `-compsec` appended to the tag.
 3. Use a custom tool to emulate the image selection process that is normally done by a container runtime. The reason is because we want to inject randomness - a registry will typically deliver a manifest list, and then the runtime chooses the first match. This doesn't give very interesting experiment results, so instead we are going to select based on platform (what the registry does) and then randomly choose from that set. 
 
-Note that if you are interested in the assembled manifest images, we have prepared them, and you can see those specs in [manifests](manifests).
-
-TODO:
-
- - try an automated extraction (interactive or static?) to generate compspec.json
- - push them into an artifact
- - make a list of image URIs and associated artifacts for the compspec-go tool.
+Note that our tool is implemented at [supercontainers/compspec-go](https://github.com/supercontainers/compspec-go). We also have a directory of [manifests](manifests) that show how to use the manifest-tool to generate actually (multi-platform) manifests. We can't use this approach yet because the compatibility artifact working group has not finished work (and there is no representation of compatibility there).
 
 ## Vision
 
-Note that for this initial prototype, we are largely doing everything manually. However, these manual steps will eventually be easily automated. Here are the ideal before and after scenarios.
+Note that for this initial prototype, we are largely emulating the steps of image selection with our custom tool. However, these steps can hopefully and eventually be part of a more standard pipeline.
 
 ### Prototype
 
@@ -46,6 +40,10 @@ When we have a production compatibility specification, it will be defined and pa
 2. Ask the registry for an image URI via a container runtime
 4. The registry links compatibility metadata with each image
 5. The container runtime uses the compatibility metadata to select the best image.
+
+## Preparing Images
+
+ - See [build-arm](build-arm) for instructions.
 
 ## Matrices
 
