@@ -77,7 +77,6 @@ for version in 8 9; do
     cmd=". /etc/profile && /tmp/data/generate.sh $hasGpu /tmp/data/specs/compspec-${tag}.json"
     docker run --entrypoint bash -v $PWD:/tmp/data -it ${image} -c "$cmd"
     oras push ${image}-compspec --artifact-type application/org.supercontainers.compspec ./specs/compspec-${tag}.json:application/org.supercontainers.compspec
-
 done
 
 hasGpu=no

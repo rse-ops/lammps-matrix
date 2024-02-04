@@ -1,0 +1,35 @@
+{
+  "version": "0.0.0",
+  "kind": "CompatibilitySpec",
+  "metadata": {
+    "name": "lammps-prototype",
+    "schemas": {
+      "io.archspec": "https://raw.githubusercontent.com/supercontainers/compspec/main/archspec/compspec.json",
+      "org.supercontainers": "https://raw.githubusercontent.com/supercontainers/compspec/main/supercontainers/compspec.json"
+    }
+  },
+  "compatibilities": [
+    {
+      "name": "org.supercontainers",
+      "version": "0.0.0",
+      "attributes": {
+        "hardware.gpu.available": "no",
+        "mpi.implementation": "mpich",
+        "mpi.version": "3.3.2",
+        "os.name": "Ubuntu 20.04.6 LTS",
+        "os.release": "20.04.6",
+        "os.vendor": "ubuntu",
+        "os.version": "20.04"
+      }
+    },
+    {
+      "name": "io.archspec",
+      "version": "0.0.0",
+      "attributes": {
+        "cpu.model": "0x1",
+        "cpu.target": "arm64",
+        "cpu.vendor": "ARM"
+      }
+    }
+  ]
+}

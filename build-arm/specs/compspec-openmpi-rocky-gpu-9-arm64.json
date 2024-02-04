@@ -1,0 +1,35 @@
+{
+  "version": "0.0.0",
+  "kind": "CompatibilitySpec",
+  "metadata": {
+    "name": "lammps-prototype",
+    "schemas": {
+      "io.archspec": "https://raw.githubusercontent.com/supercontainers/compspec/main/archspec/compspec.json",
+      "org.supercontainers": "https://raw.githubusercontent.com/supercontainers/compspec/main/supercontainers/compspec.json"
+    }
+  },
+  "compatibilities": [
+    {
+      "name": "org.supercontainers",
+      "version": "0.0.0",
+      "attributes": {
+        "hardware.gpu.available": "yes",
+        "mpi.implementation": "OpenMPI",
+        "mpi.version": "4.1.1",
+        "os.name": "Rocky Linux 9.3 (Blue Onyx)",
+        "os.release": "9.3",
+        "os.vendor": "rocky",
+        "os.version": "9.3"
+      }
+    },
+    {
+      "name": "io.archspec",
+      "version": "0.0.0",
+      "attributes": {
+        "cpu.model": "0x1",
+        "cpu.target": "arm64",
+        "cpu.vendor": "ARM"
+      }
+    }
+  ]
+}
