@@ -211,7 +211,7 @@ spack somehow built AMG-2023 with the wrong arch? And that works?
 #### Does the compspec extractor see the QEMU metadata or the host?
 
 Now let's build images with compspec and dump out the json during the build.
-New Dockerfile:
+New Dockerfile for arm:
 
 ```dockerfile
 FROM alpine as base
@@ -225,16 +225,31 @@ RUN cd ./compspec-go && \
 RUN compspec extract --name system[processor] -o /system-processor.json
 ```
 
+And amd64:
+
+```dockerfile
+FROM alpine as base
+COPY --from=golang:1.21-alpine /usr/local/go/ /usr/local/go/
+RUN apk update && apk add git 
+ENV PATH=/usr/local/go/bin:$PATH
+RUN git clone -b tweaks-testing-arm https://github.com/supercontainers/compspec-go
+RUN cd ./compspec-go && \
+    GOOS=linux GOARCH=amd64 go build -o ./bin/compspec cmd/compspec/compspec.go
+    mv ./bin/compspec /usr/local/bin/compspec
+RUN compspec extract --name system[processor] -o /system-processor.json
+```
+
 We can compare these two.
 
 ```bash
 docker buildx build --load -f Dockerfile.alpine --platform linux/arm64 --tag dump-arm . 
-docker buildx build --load -f Dockerfile.alpine --platform linux/amd64 --tag dump-amd64 .
+docker buildx build --load -f Dockerfile.alpine-amd --platform linux/amd64 --tag dump-amd64 .
 
 docker save dump-arm -o dump-arm.tar
 docker save dump-amd64 -o dump-amd.tar
 ```
 
+It's important to use `--no-cache` if you see the same layer appear twice (it should not) across image dumps.
 Export. You'll need to look in the manifest.json to see the last layer.
 
 ```bash
