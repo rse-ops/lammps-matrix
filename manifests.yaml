@@ -33,3 +33,7 @@ images:
     artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-20.04-amd64-compspec
   - name: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-22.04-amd64
     artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-gpu-22.04-amd64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-rocky-gpu-9-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-rocky-gpu-9-amd64-compspec
+  - name: ghcr.io/rse-ops/lammps-matrix:openmpi-rocky-gpu-8-amd64
+    artifact: ghcr.io/rse-ops/lammps-matrix:openmpi-rocky-gpu-8-amd64-compspec
