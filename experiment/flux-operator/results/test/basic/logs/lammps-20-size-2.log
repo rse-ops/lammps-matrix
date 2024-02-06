@@ -1,0 +1,35 @@
+Flux install root: /mnt/flux/view
+🟧️  wait-fs: 2024/02/06 01:55:32 wait-fs.go:40: /mnt/flux/flux-operator-done.txt
+🟧️  wait-fs: 2024/02/06 01:55:32 wait-fs.go:49: Found existing path /mnt/flux/flux-operator-done.txt
+Python version: /mnt/flux/view/bin/python3.11
+Python root: /mnt/flux/view/lib/python3.11
+PYTHONPATH is :/mnt/flux/view/lib/python3.11/site-packages
+PATH is /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/mnt/flux/view/bin
+/mnt/flux/view/lib/libpython3.so
+/mnt/flux/view/lib/libpython3.11.so
+/mnt/flux/view/lib/libpython3.11.so.1.0
+lrwxrwxrwx 1 root root 121 Feb  6 01:55 /mnt/flux/view/lib/libpython3.11.so.1.0 -> /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/python-3.11.6-onhc7haelkrgtcm6ymhi3nz25fpgfzdp/lib/libpython3.11.so.1.0
+Hello user root
+🌟️ Curve Certificate
+curve.cert
+#   ****  Generated on 2023-04-26 22:54:42 by CZMQ  ****
+#   ZeroMQ CURVE **Secret** Certificate
+#   DO NOT PROVIDE THIS FILE TO OTHER USERS nor change its permissions.
+    
+metadata
+    name = "flux-cert-generator"
+    keygen.hostname = "lammps-20-size-2-0"
+curve
+    public-key = "?+[sTBq^zXida@%UL0rp?PNH>ZTunneaR)wd!Ia^"
+    secret-key = "GU}bkfMXmn*UcAdv?}E$2zk#VfE@ps]Ri!mf3!*$"
+👋 Hello, I'm lammps-20-size-2-0
+The main host is lammps-20-size-2-0
+The working directory is /opt/lammps/examples/reaxff/HNS, contents include:
+README.txt	ffield.reax.hns  log.8Mar18.reaxc.hns.g++.1
+data.hns-equil	in.reaxc.hns	 log.8Mar18.reaxc.hns.g++.4
+🚩️ Flux Option Flags defined
+Command provided is: lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+🌀 Submit Mode: flux start -o --config /mnt/flux/view/etc/flux/config -Scron.directory=/etc/flux/system/cron.d   -Stbon.fanout=256   -Srundir=/mnt/flux/view/run/flux    -Sstatedir=/mnt/flux/view/var/lib/flux   -Slocal-uri=local:///mnt/flux/view/run/flux/local -Stbon.connect_timeout=5s    -Slog-stderr-level=6    -Slog-stderr-mode=local  flux submit  -N 2 -n4   --quiet --watch lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+/opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/flux-core-0.55.0-q3jyqnvbwaeu3crvofbneaejdpvu4pjm/libexec/flux/cmd/flux-broker: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.30' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/libzmq-4.3.4-vazhs2bn5rochoj7mrefpvvyjuprubkt/lib/libzmq.so.5)

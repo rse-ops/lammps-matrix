@@ -1,0 +1,24 @@
+apiVersion: flux-framework.org/v1alpha2
+kind: MiniCluster
+metadata:
+  name: {{ name }}
+spec:
+  size: {{ size }}
+  tasks: {{ tasks }}
+  pod:
+    labels:
+      app: {{ name }}
+  flux:
+    container:
+      image: {{ flux_container }}
+  containers:
+    - image: {{ image }}
+      command: {{ executable }} -v x {{ x }} -v y {{ y }} -v z {{ z }} -in in.reaxc.hns -nocite
+      {% if command %}commands:
+        pre:
+          {{ command }}{% endif %}          
+      resources:
+        limits:
+          cpu: {{ cpu_limit }}
+        requests:
+          cpu: {{ cpu_limit }}

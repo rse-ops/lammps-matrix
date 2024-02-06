@@ -1,0 +1,22 @@
+apiVersion: flux-framework.org/v1alpha2
+kind: MiniCluster
+metadata:
+  name: lammps-13-size-2
+spec:
+  size: 2
+  tasks: 4
+  pod:
+    labels:
+      app: lammps-13-size-2
+  flux:
+    container:
+      image: ghcr.io/converged-computing/flux-view-ubuntu:tag-jammy
+  containers:
+    - image: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-22.04-amd64
+      command: lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+                
+      resources:
+        limits:
+          cpu: 2
+        requests:
+          cpu: 2
