@@ -1,0 +1,623 @@
+[
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-3-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 3,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 37
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-4-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 4,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 34
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-5-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 5,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 34
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-6-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 6,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 34
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-7-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 7,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-8-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 8,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-9-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 9,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-10-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 10,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-11-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 11,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-12-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 12,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-13-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 13,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-14-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 14,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-15-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 15,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 36
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-16-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 16,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-17-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 17,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-18-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 18,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 36
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-19-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 19,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 34
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-20-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 20,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-21-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 21,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-22-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 22,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-23-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 23,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 34
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-24-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 24,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-25-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 25,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-26-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 26,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 36
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-27-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 27,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 35
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-22.04-arm64",
+            "name": "lammps-28-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
+        },
+        "iter": 28,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "22.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 36
+    },
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:mpich-ubuntu-20.04-arm64",
+            "name": "lammps-29-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal"
+        },
+        "iter": 29,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "arm64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "mpich"
+        },
+        "total_wrapped_time": 36
+    }
+]

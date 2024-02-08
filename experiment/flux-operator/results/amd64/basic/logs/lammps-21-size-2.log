@@ -1,0 +1,47 @@
+Flux install root: /mnt/flux/view
+🟧️  wait-fs: 2024/02/07 03:47:22 wait-fs.go:40: /mnt/flux/flux-operator-done.txt
+🟧️  wait-fs: 2024/02/07 03:47:22 wait-fs.go:49: Found existing path /mnt/flux/flux-operator-done.txt
+Python version: /mnt/flux/view/bin/python3.11
+Python root: /mnt/flux/view/lib/python3.11
+PYTHONPATH is :/mnt/flux/view/lib/python3.11/site-packages
+PATH is /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/mnt/flux/view/bin
+/mnt/flux/view/lib/libpython3.so
+/mnt/flux/view/lib/libpython3.11.so
+/mnt/flux/view/lib/libpython3.11.so.1.0
+lrwxrwxrwx 1 root root 121 Feb  7 03:47 /mnt/flux/view/lib/libpython3.11.so.1.0 -> /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/python-3.11.6-onhc7haelkrgtcm6ymhi3nz25fpgfzdp/lib/libpython3.11.so.1.0
+Hello user root
+🌟️ Curve Certificate
+curve.cert
+#   ****  Generated on 2023-04-26 22:54:42 by CZMQ  ****
+#   ZeroMQ CURVE **Secret** Certificate
+#   DO NOT PROVIDE THIS FILE TO OTHER USERS nor change its permissions.
+    
+metadata
+    name = "flux-cert-generator"
+    keygen.hostname = "lammps-21-size-2-0"
+curve
+    public-key = "}J{M@6(svHYC.3zTD)$4n?[xY2yT<%ADsFxs}w7}"
+    secret-key = "(<=057Af+Dm#4}0a1sCnY3#s<g>%?g9MKR9g$8B)"
+👋 Hello, I'm lammps-21-size-2-0
+The main host is lammps-21-size-2-0
+The working directory is /opt/lammps/examples/reaxff/HNS, contents include:
+README.txt	ffield.reax.hns  log.8Mar18.reaxc.hns.g++.1
+data.hns-equil	in.reaxc.hns	 log.8Mar18.reaxc.hns.g++.4
+🚩️ Flux Option Flags defined
+Command provided is: lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+🌀 Submit Mode: flux start -o --config /mnt/flux/view/etc/flux/config -Scron.directory=/etc/flux/system/cron.d   -Stbon.fanout=256   -Srundir=/mnt/flux/view/run/flux    -Sstatedir=/mnt/flux/view/var/lib/flux   -Slocal-uri=local:///mnt/flux/view/run/flux/local -Stbon.connect_timeout=5s    -Slog-stderr-level=6    -Slog-stderr-mode=local  flux submit  -N 2 -n4   --quiet --watch lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by flux)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by flux)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/flux-core-0.55.0-q3jyqnvbwaeu3crvofbneaejdpvu4pjm/lib/libflux-core.so.2)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/flux-core-0.55.0-q3jyqnvbwaeu3crvofbneaejdpvu4pjm/lib/libflux-core.so.2)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/flux-core-0.55.0-q3jyqnvbwaeu3crvofbneaejdpvu4pjm/lib/libflux-optparse.so.1)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/libarchive-3.7.1-cieq77rp6agaqt4b7o4nxe7bnu5yi6bp/lib/libarchive.so.13)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/openssl-3.1.3-jpdo4dqoitcsqxvqlfxlhzuuamqm5zmq/lib64/libcrypto.so.3)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/openssl-3.1.3-jpdo4dqoitcsqxvqlfxlhzuuamqm5zmq/lib64/libcrypto.so.3)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.33' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/libxml2-2.10.3-dkdr7hkidrfqfa43z4ei4nf5b64lqr3j/lib/libxml2.so.2)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/libxml2-2.10.3-dkdr7hkidrfqfa43z4ei4nf5b64lqr3j/lib/libxml2.so.2)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.32' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/xz-5.4.1-tqcrienphgxojt5upp4bfapmiiaxdaww/lib/liblzma.so.5)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/xz-5.4.1-tqcrienphgxojt5upp4bfapmiiaxdaww/lib/liblzma.so.5)
+flux: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by /opt/software/linux-ubuntu22.04-x86_64/gcc-11.4.0/zstd-1.5.5-26xunvkyfpc44witsjvrke7wknak6a5b/lib/libzstd.so.1)

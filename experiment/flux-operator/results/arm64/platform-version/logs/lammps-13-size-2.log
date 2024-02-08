@@ -1,0 +1,64 @@
+/flux_operator/wait-0.sh: line 23: curl: command not found
+Flux install root: /mnt/flux/view
+/flux_operator/wait-0.sh: line 45: /usr/bin/goshare-wait-fs: cannot execute binary file: Exec format error
+Python version: /mnt/flux/view/bin/python3.11
+Python root: /mnt/flux/view/lib/python3.11
+PYTHONPATH is :/mnt/flux/view/lib/python3.11/site-packages
+PATH is /usr/local/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/mnt/flux/view/bin
+/mnt/flux/view/lib/libpython3.11.so
+/mnt/flux/view/lib/libpython3.11.so.1.0
+/mnt/flux/view/lib/libpython3.so
+./software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.11.so
+./software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.11.so.1.0
+./software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.so
+lrwxrwxrwx 1 root root 122 Feb  7 08:41 /mnt/flux/view/lib/libpython3.11.so.1.0 -> /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.11.so.1.0
+Hello user root
+🌟️ Curve Certificate
+curve.cert
+#   ****  Generated on 2023-04-26 22:54:42 by CZMQ  ****
+#   ZeroMQ CURVE **Secret** Certificate
+#   DO NOT PROVIDE THIS FILE TO OTHER USERS nor change its permissions.
+    
+metadata
+    name = "flux-cert-generator"
+    keygen.hostname = "lammps-13-size-2-0"
+curve
+    public-key = "O.oZ9MHYf-PxMtXr>eTCTO+I%wlzr}Vw+[Yn.Gj&"
+    secret-key = "M7&m>M=<82+X^FY[roqB-eC0xsP8LDQ5Pr!L:.ZY"
+👋 Hello, I'm lammps-13-size-2-0
+The main host is lammps-13-size-2-0
+The working directory is /opt, contents include:
+lammps	nvidia	software
+🚩️ Flux Option Flags defined
+Command provided is: lmp_gpu -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+🌀 Submit Mode: flux start -o --config /mnt/flux/view/etc/flux/config -Scron.directory=/etc/flux/system/cron.d   -Stbon.fanout=256   -Srundir=/mnt/flux/view/run/flux    -Sstatedir=/mnt/flux/view/var/lib/flux   -Slocal-uri=local:///mnt/flux/view/run/flux/local -Stbon.connect_timeout=5s    -Slog-stderr-level=6    -Slog-stderr-mode=local  flux submit  -N 2 -n4   --quiet --watch lmp_gpu -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+broker.info[0]: start: none->join 3.65768ms
+broker.info[0]: parent-none: join->init 0.02476ms
+cron.info[0]: synchronizing cron tasks to event heartbeat.pulse
+job-manager.info[0]: restart: 0 jobs
+job-manager.info[0]: restart: 0 running jobs
+job-manager.info[0]: restart: checkpoint.job-manager not found
+broker.info[0]: rc1.0: running /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/flux-core-0.55.0-ahe6z5tuwe5i4gy2iq5yszkjiwrxuvzz/etc/flux/rc1.d/02-cron
+broker.info[0]: rc1.0: /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/flux-core-0.55.0-ahe6z5tuwe5i4gy2iq5yszkjiwrxuvzz/etc/flux/rc1 Exited (rc=0) 0.8s
+broker.info[0]: rc1-success: init->quorum 0.778849s
+broker.info[0]: online: lammps-13-size-2-0 (ranks 0)
+broker.info[0]: online: lammps-13-size-2-[0-1] (ranks 0-1)
+broker.info[0]: quorum-full: quorum->run 0.306508s
+job-manager.err[0]: jobtap: job.new: callback returned error
+lmp_gpu: error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or directory
+lmp_gpu: error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or directory
+lmp_gpu: error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or directory
+lmp_gpu: error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or directory
+job-manager.err[0]: jobtap: job.inactive-add: callback returned error
+broker.err[0]: rc2.0: flux submit -N 2 -n4 --quiet --watch lmp_gpu -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite Exited (rc=127) 0.7s
+broker.info[0]: rc2-fail: run->cleanup 0.687129s
+broker.info[0]: cleanup.0: flux queue stop --quiet --all --nocheckpoint Exited (rc=0) 0.1s
+broker.info[0]: cleanup.1: flux cancel --user=all --quiet --states RUN Exited (rc=0) 0.1s
+broker.info[0]: cleanup.2: flux queue idle --quiet Exited (rc=0) 0.1s
+broker.info[0]: cleanup-success: cleanup->shutdown 0.404558s
+broker.info[0]: children-complete: shutdown->finalize 73.7384ms
+broker.info[0]: rc3.0: /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/flux-core-0.55.0-ahe6z5tuwe5i4gy2iq5yszkjiwrxuvzz/etc/flux/rc3 Exited (rc=0) 0.4s
+broker.info[0]: rc3-success: finalize->goodbye 0.386334s
+broker.info[0]: goodbye: goodbye->exit 0.0326ms

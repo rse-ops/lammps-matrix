@@ -1,0 +1,36 @@
+Flux install root: /mnt/flux/view
+/flux_operator/wait-0.sh: line 45: /usr/bin/goshare-wait-fs: cannot execute binary file: Exec format error
+Python version: /mnt/flux/view/bin/python3.11
+Python root: /mnt/flux/view/lib/python3.11
+PYTHONPATH is :/mnt/flux/view/lib/python3.11/site-packages
+PATH is /usr/local/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib64/openmpi/bin:/mnt/flux/view/bin
+/mnt/flux/view/lib/libpython3.11.so
+/mnt/flux/view/lib/libpython3.11.so.1.0
+/mnt/flux/view/lib/libpython3.so
+./software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.11.so
+./software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.11.so.1.0
+./software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.so
+lrwxrwxrwx 1 root root 122 Feb  7 07:49 /mnt/flux/view/lib/libpython3.11.so.1.0 -> /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.11.so.1.0
+Hello user root
+🌟️ Curve Certificate
+curve.cert
+#   ****  Generated on 2023-04-26 22:54:42 by CZMQ  ****
+#   ZeroMQ CURVE **Secret** Certificate
+#   DO NOT PROVIDE THIS FILE TO OTHER USERS nor change its permissions.
+    
+metadata
+    name = "flux-cert-generator"
+    keygen.hostname = "lammps-26-size-2-0"
+curve
+    public-key = "&f7zTK!raqPCtXO>tAG3o^9hHj+Zt%O3ow:K=DHP"
+    secret-key = "Y=$ro{GH0T4MC2ldxvRvR*^@P]EmuRs4=XI8KlR7"
+👋 Hello, I'm lammps-26-size-2-0
+The main host is lammps-26-size-2-0
+The working directory is /opt, contents include:
+lammps	nvidia	software
+🚩️ Flux Option Flags defined
+Command provided is: lmp_gpu -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+🌀 Submit Mode: flux start -o --config /mnt/flux/view/etc/flux/config -Scron.directory=/etc/flux/system/cron.d   -Stbon.fanout=256   -Srundir=/mnt/flux/view/run/flux    -Sstatedir=/mnt/flux/view/var/lib/flux   -Slocal-uri=local:///mnt/flux/view/run/flux/local -Stbon.connect_timeout=5s    -Slog-stderr-level=6    -Slog-stderr-mode=local  flux submit  -N 2 -n4   --quiet --watch lmp_gpu -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+/opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/flux-core-0.55.0-ahe6z5tuwe5i4gy2iq5yszkjiwrxuvzz/libexec/flux/cmd/flux-broker: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.30' not found (required by /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/libzmq-4.3.4-72c7vtq3zwr32pgkcdle5ztigyn5ghsh/lib/libzmq.so.5)

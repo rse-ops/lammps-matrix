@@ -1,0 +1,24 @@
+apiVersion: flux-framework.org/v1alpha2
+kind: MiniCluster
+metadata:
+  name: lammps-15-size-2
+spec:
+  size: 2
+  tasks: 4
+  pod:
+    labels:
+      app: lammps-15-size-2
+  flux:
+    container:
+      image: ghcr.io/converged-computing/flux-view-rocky:tag-9
+  containers:
+    - image: ghcr.io/rse-ops/lammps-matrix:intel-mpi-rocky-9-amd64
+      command: lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+      commands:
+        pre:
+          . /opt/intel/mpi/latest/env/vars.sh          
+      resources:
+        limits:
+          cpu: 2
+        requests:
+          cpu: 2

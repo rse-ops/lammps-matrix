@@ -3,7 +3,6 @@
 import argparse
 import copy
 import json
-import multiprocessing
 import os
 import subprocess
 import shutil
@@ -11,7 +10,6 @@ import random
 import sys
 import tempfile
 import yaml
-from collections import defaultdict
 from datetime import datetime
 
 from jinja2 import Template
@@ -50,10 +48,19 @@ rocky_views = [
     "ghcr.io/converged-computing/flux-view-rocky:tag-8",
     "ghcr.io/converged-computing/flux-view-rocky:tag-9",
 ]
+rocky_arm_views = [
+    "ghcr.io/converged-computing/flux-view-rocky:arm-8",
+    "ghcr.io/converged-computing/flux-view-rocky:arm-9",
+]
 
 ubuntu_views = [
     "ghcr.io/converged-computing/flux-view-ubuntu:tag-focal",
     "ghcr.io/converged-computing/flux-view-ubuntu:tag-jammy",
+]
+
+ubuntu_arm_views = [
+    "ghcr.io/converged-computing/flux-view-ubuntu:arm-focal",
+    "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy",
 ]
 
 # These are matches we will request for each platform and flux view
@@ -108,6 +115,14 @@ kube_client = client.CoreV1Api()
 
 # Try using a global watcher
 watcher = watch.Watch()
+
+
+def write_json(content, filename):
+    """
+    Write json to file
+    """
+    with open(filename, "w") as fd:
+        fd.write(json.dumps(content, indent=4))
 
 
 def write_file(content, filename):
@@ -284,7 +299,10 @@ def generate_basic_minicluster(args, manifests, cfg, name):
     manifest.
     """
     # For basic platform, we hard code a single os to be consistent
-    container = "ghcr.io/converged-computing/flux-view-ubuntu:tag-jammy"
+    if args.platform == "amd64":
+        container = "ghcr.io/converged-computing/flux-view-ubuntu:tag-jammy"
+    else:
+        container = "ghcr.io/converged-computing/flux-view-ubuntu:arm-jammy"
     render = generate_basic_base(args, manifests, cfg, name)
     render["flux_container"] = container
     return render
@@ -296,10 +314,14 @@ def generate_platform_minicluster(args, manifests, cfg, name):
     rocky, and randomly.
     """
     render = generate_basic_base(args, manifests, cfg, name)
-    if "ubuntu" in render["image"]:
+    if "ubuntu" in render["image"] and args.platform == "amd64":
         render["flux_container"] = random.choice(ubuntu_views)
-    else:
+    elif "ubuntu" in render["image"]:
+        render["flux_container"] = random.choice(ubuntu_arm_views)
+    elif "rocky" in render["image"] and args.platform == "amd64":
         render["flux_container"] = random.choice(rocky_views)
+    elif "rocky" in render["image"]:
+        render["flux_container"] = random.choice(rocky_arm_views)
     return render
 
 
@@ -308,14 +330,31 @@ def generate_platform_version_minicluster(args, manifests, cfg, name):
     Select platform AND version! No glibc errors here!
     """
     render = generate_basic_base(args, manifests, cfg, name)
-    if "ubuntu" in render["image"] and "20.04" in render["image"]:
+    if (
+        "ubuntu" in render["image"]
+        and "20.04" in render["image"]
+        and args.platform == "amd64"
+    ):
         render["flux_container"] = ubuntu_views[0]
-    elif "ubuntu" in render["image"]:
+    elif "ubuntu" in render["image"] and args.platform == "amd64":
         render["flux_container"] = ubuntu_views[1]
-    elif "rocky" in render["image"] and "-8-" in render["image"]:
+    elif "ubuntu" in render["image"] and "20.04" in render["image"]:
+        render["flux_container"] = ubuntu_arm_views[0]
+    elif "ubuntu" in render["image"]:
+        render["flux_container"] = ubuntu_arm_views[1]
+
+    elif (
+        "rocky" in render["image"]
+        and "-8-" in render["image"]
+        and args.platform == "amd64"
+    ):
         render["flux_container"] = rocky_views[0]
-    else:
+    elif "rocky" in render["image"] and args.platform == "amd64":
         render["flux_container"] = rocky_views[1]
+    elif "rocky" in render["image"] and "-8-" in render["image"]:
+        render["flux_container"] = rocky_arm_views[0]
+    else:
+        render["flux_container"] = rocky_arm_views[1]
     return render
 
 
@@ -350,13 +389,15 @@ def generate_basic_base(args, manifests, cfg, name):
     return render
 
 
-def generate_descriptive_minicluster(args, manifest_file, cfg, name):
+def generate_descriptive_minicluster(args, manifest_file, cfg, name, mpi=False):
     """
     Generate a descriptive minicluster
 
     For the descriptive case, we are going to run compspec (with a cache)
     to do image selection for us, accounting for a specific operating system,
     version (for glibc) and gpu (or most likely not to start - can be exposed later).
+    When mpi is true, use the args.mode to further filter down to an mpi variant.
+    We know mpich is better on Google Cloud.
     """
     # This time, we aren't selected from images (manifests)
     # but rather starting with a base image (from reqs) and then using compspec
@@ -390,6 +431,15 @@ def generate_descriptive_minicluster(args, manifest_file, cfg, name):
     else:
         cmd += ["--match", "io.archspec.cpu.target=arm64"]
 
+    # This might be the one glimpse of performance differences
+    if mpi:
+        if args.mode == "openmpi":
+            cmd += ["--match", "org.supercontainers.mpi.implementation=OpenMPI"]
+        elif args.mode == "mpich":
+            cmd += ["--match", "org.supercontainers.mpi.implementation=mpich"]
+        elif args.mode == "intel-mpi":
+            cmd += ["--match", "org.supercontainers.mpi.implementation=intel-mpi"]
+
     # We only want ONE match, and random selection
     cmd += ["--single", "--randomize"]
 
@@ -397,7 +447,13 @@ def generate_descriptive_minicluster(args, manifest_file, cfg, name):
     # Note we don't test for ZERO matches because we know we have them
     # Note this is currently slow and will speed up when we cache the graph
     print(" ".join(cmd))
-    o, e = run_command(cmd, quiet=True)
+
+    # When we limit to MPI variant we might empty the match set
+    try:
+        o, e = run_command(cmd, quiet=True)
+    except:
+        return
+
     if "Found matches" not in o:
         print("Error with match, this should not happen, look at it.")
         import IPython
@@ -425,6 +481,49 @@ def generate_descriptive_minicluster(args, manifest_file, cfg, name):
     return render
 
 
+def get_base_features(args, container):
+    """
+    Get base features for a TBA vector.
+
+    This is manually done, we will want to improve upon this!
+    Arguably it can be automated if we fully use compspec.
+    """
+    features = {}
+    if args.gpu:
+        features["org.supercontainers.hardware.gpu.available"] = "yes"
+    else:
+        features["org.supercontainers.hardware.gpu.available"] = "no"
+
+    # Add in request for platform
+    if args.platform == "amd64":
+        features["io.archspec.cpu.target"] = "amd64"
+    else:
+        features["io.archspec.cpu.target"] = "arm64"
+
+    if "rocky" in container:
+        features["org.supercontainers.os.vendor"] = "rocky"
+    else:
+        features["org.supercontainers.os.vendor"] = "ubuntu"
+
+    if "ubuntu" in container and "20.04" in container:
+        features["org.supercontainers.os.version"] = "20.04"
+    elif "ubuntu" in container and "22.04" in container:
+        features["org.supercontainers.os.version"] = "22.04"
+    elif "rocky" in container and "-8-" in container:
+        features["org.supercontainers.os.version"] = "8.9"
+    elif "rocky" in container and "-9-" in container:
+        features["org.supercontainers.os.version"] = "9.3"
+
+    if args.mode == "openmpi":
+        features["org.supercontainers.mpi.implementation"] = "OpenMPI"
+    elif args.mode == "mpich":
+        features["org.supercontainers.mpi.implementation"] = "mpich"
+    elif args.mode == "intel-mpi":
+        features["org.supercontainers.mpi.implementation"] = "intel-mpi"
+
+    return features
+
+
 def run(args, config_name, outdir):
     """
     Run the experiments for a given experiment type.
@@ -435,7 +534,7 @@ def run(args, config_name, outdir):
     template = Template(read_file(experiment["template"]))
 
     # Keep record of all specs across iterations
-    specs = {}
+    specs = []
 
     # Load manifests.yaml
     manifests = load_yaml(args.manifests)
@@ -448,7 +547,7 @@ def run(args, config_name, outdir):
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
 
-    for i in range(args.iters):
+    for i in range(3, args.iters):
 
         # Run 1 of each experiment size for lammps
         # note that we can change how we do this (random, etc)
@@ -479,15 +578,26 @@ def run(args, config_name, outdir):
                 )
 
             # descriptive also accounts for gpu
-            elif args.mode == "descriptive-basic":
-                # We provide the manifests.yaml file instead - compspec does the selection from artifacts
-                render = generate_descriptive_minicluster(
-                    args, args.manifests, cfg, minicluster_name
-                )
+            # Descriptive with an mpi mode!
+            elif "mpi" in args.mode or args.mode == "descriptive-basic":
+                render = None
+
+                # This is a huge limitation and we can empty the match set
+                while not render:
+                    render = generate_descriptive_minicluster(
+                        args,
+                        args.manifests,
+                        cfg,
+                        minicluster_name,
+                        mpi="mpi" in args.mode,
+                    )
 
             size = cfg["size"]
             spec = {"params": render, "iter": i}
             name = spec["params"]["name"]
+
+            # Derive features (for later vector)
+            spec["features"] = get_base_features(args, render["image"])
 
             # Generate and submit the template...
             minicluster_yaml = template.render(render)
@@ -508,8 +618,10 @@ def run(args, config_name, outdir):
             end_time = datetime.utcnow()
             spec["total_wrapped_time"] = (end_time - start_time).seconds
             delete_minicluster(name)
+            specs.append(spec)
 
     print(f"🧪️ Experiments are finished. See output in {outdir}")
+    write_json(specs, os.path.join(log_dir, "specs.json"))
 
 
 def confirm_action(question):
@@ -550,13 +662,26 @@ def get_parser():
     parser.add_argument(
         "--mode",
         default="basic",
-        choices=["basic", "platform", "platform-version", "descriptive-basic"],
+        choices=[
+            "basic",
+            "platform",
+            "platform-version",
+            "descriptive-basic",
+            "openmpi",
+            "intel-mpi",
+            "mpich",
+        ],
         help="mode to run in (basic or descriptive)",
     )
     parser.add_argument(
         "--gpu",
         action="store_true",
         help="specify wanting GPU for descriptive (only supported for this case)",
+    )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="do not ask for confirmation",
     )
     parser.add_argument(
         "--outdir",
@@ -601,19 +726,20 @@ def main():
     print(f"▶️  Output directory: {outdir}")
     print(f"▶️       Config name: {args.config_name}")
     print(f"▶️        Iterations: {args.iters}")
+    print(f"▶️          Platform: {args.platform}")
     print(f"▶️              Mode: {args.mode}")
 
     # kubectl create -f cfg/service.yaml
     # kubectl create -f cfg/rbac.yaml
 
-    if not confirm_action("Would you like to continue?"):
+    if not args.force and not confirm_action("Would you like to continue?"):
         sys.exit("Cancelled!")
 
     # Write the topology to this file
     topology_file = os.path.join(outdir, "topology.json")
 
     # Write cluster node configuration and return mapping
-    node_topology = save_nodes(topology_file)
+    save_nodes(topology_file)
 
     try:
         run(args, args.config_name, outdir)

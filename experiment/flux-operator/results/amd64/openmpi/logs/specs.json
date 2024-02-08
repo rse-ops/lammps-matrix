@@ -1,0 +1,25 @@
+[
+    {
+        "params": {
+            "x": 2,
+            "y": 2,
+            "z": 2,
+            "cpu_limit": 2,
+            "tasks": 4,
+            "size": 2,
+            "image": "ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-20.04-amd64",
+            "name": "lammps-20-size-2",
+            "executable": "lmp",
+            "flux_container": "ghcr.io/converged-computing/flux-view-ubuntu:tag-focal"
+        },
+        "iter": 20,
+        "features": {
+            "org.supercontainers.hardware.gpu.available": "no",
+            "io.archspec.cpu.target": "amd64",
+            "org.supercontainers.os.vendor": "ubuntu",
+            "org.supercontainers.os.version": "20.04",
+            "org.supercontainers.mpi.implementation": "OpenMPI"
+        },
+        "total_wrapped_time": 34
+    }
+]

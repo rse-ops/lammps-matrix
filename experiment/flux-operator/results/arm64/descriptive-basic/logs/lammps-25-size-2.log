@@ -1,0 +1,134 @@
+Flux install root: /mnt/flux/view
+/flux_operator/wait-0.sh: line 45: /usr/bin/goshare-wait-fs: cannot execute binary file: Exec format error
+Python version: /mnt/flux/view/bin/python3.11
+Python root: /mnt/flux/view/lib/python3.11
+PYTHONPATH is :/mnt/flux/view/lib/python3.11/site-packages
+PATH is /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/mnt/flux/view/bin
+/mnt/flux/view/lib/libpython3.11.so
+/mnt/flux/view/lib/libpython3.11.so.1.0
+/mnt/flux/view/lib/libpython3.so
+lrwxrwxrwx 1 root root 122 Feb  7 13:23 /mnt/flux/view/lib/libpython3.11.so.1.0 -> /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/python-3.11.6-sq6qembwppvo57y5l6x336hwygnzosgp/lib/libpython3.11.so.1.0
+Hello user root
+🌟️ Curve Certificate
+curve.cert
+#   ****  Generated on 2023-04-26 22:54:42 by CZMQ  ****
+#   ZeroMQ CURVE **Secret** Certificate
+#   DO NOT PROVIDE THIS FILE TO OTHER USERS nor change its permissions.
+    
+metadata
+    name = "flux-cert-generator"
+    keygen.hostname = "lammps-25-size-2-0"
+curve
+    public-key = "4/kSgAqTQNxmxrM@t<5L11GAY7v-3mevWE6&z!=8"
+    secret-key = "Nz5f82pY/rc]y5+4w:s?xq#RdDzxmZ1nO6i]!7Nj"
+👋 Hello, I'm lammps-25-size-2-0
+The main host is lammps-25-size-2-0
+The working directory is /opt/lammps/examples/reaxff/HNS, contents include:
+README.txt	ffield.reax.hns  log.8Mar18.reaxc.hns.g++.1
+data.hns-equil	in.reaxc.hns	 log.8Mar18.reaxc.hns.g++.4
+🚩️ Flux Option Flags defined
+Command provided is: lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+🌀 Submit Mode: flux start -o --config /mnt/flux/view/etc/flux/config -Scron.directory=/etc/flux/system/cron.d   -Stbon.fanout=256   -Srundir=/mnt/flux/view/run/flux    -Sstatedir=/mnt/flux/view/var/lib/flux   -Slocal-uri=local:///mnt/flux/view/run/flux/local -Stbon.connect_timeout=5s    -Slog-stderr-level=6    -Slog-stderr-mode=local  flux submit  -N 2 -n4   --quiet --watch lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite
+Flags for flux are -N 2 -n4  
+broker.info[0]: start: none->join 0.6294ms
+broker.info[0]: parent-none: join->init 0.01912ms
+cron.info[0]: synchronizing cron tasks to event heartbeat.pulse
+job-manager.info[0]: restart: 0 jobs
+job-manager.info[0]: restart: 0 running jobs
+job-manager.info[0]: restart: checkpoint.job-manager not found
+broker.info[0]: rc1.0: running /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/flux-core-0.55.0-ahe6z5tuwe5i4gy2iq5yszkjiwrxuvzz/etc/flux/rc1.d/02-cron
+broker.info[0]: rc1.0: /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/flux-core-0.55.0-ahe6z5tuwe5i4gy2iq5yszkjiwrxuvzz/etc/flux/rc1 Exited (rc=0) 0.8s
+broker.info[0]: rc1-success: init->quorum 0.78988s
+broker.info[0]: online: lammps-25-size-2-0 (ranks 0)
+broker.info[0]: online: lammps-25-size-2-[0-1] (ranks 0-1)
+broker.info[0]: quorum-full: quorum->run 0.316185s
+job-manager.err[0]: jobtap: job.new: callback returned error
+job-manager.err[0]: jobtap: job.inactive-add: callback returned error
+LAMMPS (29 Sep 2021 - Update 2)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
+  using 1 OpenMP thread(s) per MPI task
+Reading data file ...
+  triclinic box = (0.0000000 0.0000000 0.0000000) to (22.326000 11.141200 13.778966) with tilt (0.0000000 -5.0260300 0.0000000)
+  2 by 1 by 2 MPI processor grid
+  reading atoms ...
+  304 atoms
+  reading velocities ...
+  304 velocities
+  read_data CPU = 0.003 seconds
+Replicating atoms ...
+  triclinic box = (0.0000000 0.0000000 0.0000000) to (44.652000 22.282400 27.557932) with tilt (0.0000000 -10.052060 0.0000000)
+  2 by 1 by 2 MPI processor grid
+  bounding box image = (0 -1 -1) to (0 1 1)
+  bounding box extra memory = 0.03 MB
+  average # of replicas added to proc = 6.00 out of 8 (75.00%)
+  2432 atoms
+  replicate CPU = 0.002 seconds
+Neighbor list info ...
+  update every 20 steps, delay 0 steps, check no
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 11
+  ghost atom cutoff = 11
+  binsize = 5.5, bins = 10 5 6
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair reax/c, perpetual
+      attributes: half, newton off, ghost
+      pair build: half/bin/newtoff/ghost
+      stencil: full/ghost/bin/3d
+      bin: standard
+  (2) fix qeq/reax, perpetual, copy from (1)
+      attributes: half, newton off, ghost
+      pair build: copy
+      stencil: none
+      bin: none
+Setting up Verlet run ...
+  Unit style    : real
+  Current step  : 0
+  Time step     : 0.1
+Per MPI rank memory allocation (min/avg/max) = 103.8 | 103.8 | 103.8 Mbytes
+Step Temp PotEng Press E_vdwl E_coul Volume 
+       0          300   -113.27833    437.52533   -111.57687   -1.7014647    27418.867 
+      10    302.45195   -113.28552     3548.411   -111.58441   -1.7011118    27418.867 
+      20    302.39786   -113.28517    5963.8918   -111.58443   -1.7007341    27418.867 
+      30     298.1303   -113.27217    10123.353   -111.57186   -1.7003189    27418.867 
+      40    293.43867   -113.25773    12827.586   -111.55785   -1.6998873    27418.867 
+      50    292.17905    -113.2542    12089.283    -111.5547   -1.6994924    27418.867 
+      60    293.82355   -113.25912     11172.89   -111.55996   -1.6991674    27418.867 
+      70    296.20762   -113.26646    10459.492   -111.56756   -1.6988994    27418.867 
+      80    297.98756   -113.27176    9488.5251    -111.5731    -1.698663    27418.867 
+      90    298.71673   -113.27395    8103.5091   -111.57547   -1.6984741    27418.867 
+     100    297.70128   -113.27094    8201.5633   -111.57255   -1.6983836    27418.867 
+Loop time of 8.86169 on 4 procs for 100 steps with 2432 atoms
+Performance: 0.097 ns/day, 246.158 hours/ns, 11.285 timesteps/s
+82.5% CPU use with 4 MPI tasks x 1 OpenMP threads
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 4.7192     | 5.2426     | 5.7705     |  18.5 | 59.16
+Neigh   | 0.14453    | 0.14503    | 0.14566    |   0.1 |  1.64
+Comm    | 0.051941   | 0.5791     | 1.1016     |  55.7 |  6.53
+Output  | 0.0029851  | 0.0031936  | 0.0033742  |   0.3 |  0.04
+Modify  | 2.8903     | 2.8912     | 2.892      |   0.0 | 32.63
+Other   |            | 0.0006309  |            |       |  0.01
+Nlocal:        608.000 ave         611 max         605 min
+Histogram: 1 0 0 0 0 2 0 0 0 1
+Nghost:        5734.50 ave        5742 max        5727 min
+Histogram: 1 0 0 0 1 0 1 0 0 1
+Neighs:        231557.0 ave      232624 max      230461 min
+Histogram: 1 0 0 0 1 1 0 0 0 1
+Total # of neighbors = 926228
+Ave neighs/atom = 380.85033
+Neighbor list builds = 5
+Dangerous builds not checked
+Total wall time: 0:00:09
+broker.info[0]: rc2.0: flux submit -N 2 -n4 --quiet --watch lmp -v x 2 -v y 2 -v z 2 -in in.reaxc.hns -nocite Exited (rc=0) 9.9s
+broker.info[0]: rc2-success: run->cleanup 9.85942s
+broker.info[0]: cleanup.0: flux queue stop --quiet --all --nocheckpoint Exited (rc=0) 0.1s
+broker.info[0]: cleanup.1: flux cancel --user=all --quiet --states RUN Exited (rc=0) 0.1s
+broker.info[0]: cleanup.2: flux queue idle --quiet Exited (rc=0) 0.1s
+broker.info[0]: cleanup-success: cleanup->shutdown 0.404265s
+broker.info[0]: children-complete: shutdown->finalize 0.137275s
+broker.info[0]: online: lammps-25-size-2-0 (ranks 0)
+broker.info[0]: rc3.0: /opt/software/linux-ubuntu22.04-aarch64/gcc-11.4.0/flux-core-0.55.0-ahe6z5tuwe5i4gy2iq5yszkjiwrxuvzz/etc/flux/rc3 Exited (rc=0) 0.2s
+broker.info[0]: rc3-success: finalize->goodbye 0.228612s
+broker.info[0]: goodbye: goodbye->exit 0.04468ms
