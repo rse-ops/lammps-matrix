@@ -1,0 +1,159 @@
+compilers:
+- compiler:
+    spec: clang@=16.0.6
+    paths:
+      cc: /usr/lib64/ccache/clang
+      cxx: /usr/lib64/ccache/clang++
+      f77: null
+      fc: null
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: gcc@=10.3.1
+    paths:
+      cc: /usr/tce/bin/gcc
+      cxx: /usr/tce/bin/g++
+      f77: /usr/tce/bin/gfortran
+      fc: /usr/tce/bin/gfortran
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: gcc@=8.5.0
+    paths:
+      cc: /usr/bin/gcc
+      cxx: /usr/bin/g++
+      f77: /usr/bin/gfortran
+      fc: /usr/bin/gfortran
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: intel@=2021.6.0
+    paths:
+      cc: /usr/tce/packages/intel-classic/intel-classic-2021.6.0-magic/bin/icc
+      cxx: /usr/tce/packages/intel-classic/intel-classic-2021.6.0-magic/bin/icpc
+      f77: /usr/tce/packages/intel-classic/intel-classic-2021.6.0-magic/bin/ifort
+      fc: /usr/tce/packages/intel-classic/intel-classic-2021.6.0-magic/bin/ifort
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: clang@=12.0.1
+    paths:
+      cc: /usr/tcetmp/bin/clang
+      cxx: /usr/tcetmp/bin/clang++
+      f77: null
+      fc: null
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: clang@=6.0.0
+    paths:
+      cc: /usr/tcetmp/bin/clang-archer
+      cxx: null
+      f77: null
+      fc: null
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: gcc@=4.8.5
+    paths:
+      cc: /usr/bin/gcc
+      cxx: /usr/bin/g++
+      f77: /usr/bin/gfortran
+      fc: /usr/bin/gfortran
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: gcc@=4.9.3
+    paths:
+      cc: /usr/tcetmp/bin/gcc
+      cxx: /usr/tcetmp/bin/g++
+      f77: /usr/tcetmp/bin/gfortran
+      fc: /usr/tcetmp/bin/gfortran
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: gcc@=8.3.1
+    paths:
+      cc: /usr/tce/packages/gcc/gcc-8.3.1/bin/gcc
+      cxx: /usr/tce/packages/gcc/gcc-8.3.1/bin/g++
+      f77: /usr/tce/packages/gcc/gcc-8.3.1/bin/gfortran
+      fc: /usr/tce/packages/gcc/gcc-8.3.1/bin/gfortran
+    flags: {}
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: xl@=16.1
+    paths:
+      cc: /usr/tcetmp/bin/xlc
+      cxx: /usr/tcetmp/bin/xlC
+      f77: null
+      fc: null
+    flags:
+      fflags: -qzerosize
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: xl_r@=16.1
+    paths:
+      cc: /usr/tcetmp/bin/xlc_r
+      cxx: /usr/tcetmp/bin/xlC_r
+      f77: null
+      fc: null
+    flags:
+      fflags: -qzerosize
+    operating_system: rhel7
+    target: ppc64le
+    modules: []
+    environment: {}
+    extra_rpaths: []
+- compiler:
+    spec: gcc@=12.1.1
+    paths:
+      cc: /usr/tce/packages/gcc/gcc-12.1.1/bin/gcc
+      cxx: /usr/tce/packages/gcc/gcc-12.1.1/bin/g++
+      f77: /usr/tce/packages/gcc/gcc-12.1.1/bin/gfortran
+      fc: /usr/tce/packages/gcc/gcc-12.1.1/bin/gfortran
+    flags: {}
+    operating_system: rhel8
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []

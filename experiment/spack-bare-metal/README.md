@@ -7,10 +7,12 @@ We are going to build variants of packages with spack.
 Let's clone spack and ensure we have compspec go.
 
 ```
-git clone https://github.com/supercontainers/compspec-go
+git clone https://github.com/compspec/compspec-go
 cd compspec-go
 make
 ```
+
+Note that current versions of packages.yaml and compilers.yaml are provided in [config](config),
 
 This will need to be on the path
 
@@ -69,21 +71,26 @@ We are going to want to have compatibility metadata linked to specific hashes fo
 }
 ```
 
-And the rest in the spack spec.json
 
 ## Spack Builds
 
 Starting from the above:
 
 ```
-# this didn't work
+# Lassen
 spack install lammps ^mpich
-# this was spack install lammps
-spack install lammps ^openmpi
+
+# Corona
 spack install lammps ^intel-oneapi-mpi
-spack install lammps +cuda
+
+# Quartz
+spack install lammps
+spack install openmpi@4.1.2%gcc@12.1.1 arch=linux-rhel8-broadwell
+spack install lammps%gcc@12.1.1 ^openmpi@4.1.2
 ```
 
-I think I need help with these - most are erroring, and I think we need the reaxfx variant.
+chmod -R g+rwx /p/vast1/fractale/descriptive-thrust
+
+Note that most of these didn't work. Godspeed.
 After we have builds we will use [extract-metadata.py](extract-metadata.py) to do that,
 and run experiments on some nodes.

@@ -1,0 +1,217 @@
+packages:
+  openmpi:
+    externals:
+    - spec: openmpi@4.1.2%gcc@12.1.1 arch=linux-rhel8-broadwell
+      prefix: /usr/tce/packages/openmpi/openmpi-4.1.2-gcc-12.1.1
+    - spec: openmpi@4.1.0%gcc@10.3.1 arch=linux-rhel7-power9le
+      prefix: /usr/tce/packages/openmpi/openmpi-4.1.2-gcc-10.3.1
+    buildable: false
+  binutils:
+    externals:
+    - spec: binutils@2.30.123
+      prefix: /usr
+    - spec: binutils@2.38.16
+      prefix: /usr/tce/packages/gcc/gcc-12.1.1
+    - spec: binutils@2.27.44
+      prefix: /usr
+  coreutils:
+    externals:
+    - spec: coreutils@8.30
+      prefix: /usr
+    - spec: coreutils@8.22
+      prefix: /usr
+  diffutils:
+    externals:
+    - spec: diffutils@3.6
+      prefix: /usr
+    - spec: diffutils@3.3
+      prefix: /usr
+  findutils:
+    externals:
+    - spec: findutils@4.6.0
+      prefix: /usr
+    - spec: findutils@4.5.11
+      prefix: /usr
+  gawk:
+    externals:
+    - spec: gawk@4.2.1
+      prefix: /usr
+    - spec: gawk@4.0.2
+      prefix: /usr
+  openssh:
+    externals:
+    - spec: openssh@8.0p1
+      prefix: /usr
+    - spec: openssh@7.4p1
+      prefix: /usr
+  openssl:
+    externals:
+    - spec: openssl@1.1.1k
+      prefix: /usr
+    - spec: openssl@1.0.2k-fips
+      prefix: /usr
+  tar:
+    externals:
+    - spec: tar@1.30
+      prefix: /usr
+    - spec: tar@1.26
+      prefix: /usr
+  autoconf:
+    externals:
+    - spec: autoconf@2.69
+      prefix: /usr
+  automake:
+    externals:
+    - spec: automake@1.16.1
+      prefix: /usr
+    - spec: automake@1.13.4
+      prefix: /usr
+  bison:
+    externals:
+    - spec: bison@3.0.4
+      prefix: /usr
+  ccache:
+    externals:
+    - spec: ccache@3.7.7
+      prefix: /usr
+  cmake:
+    externals:
+    - spec: cmake@3.26.5
+      prefix: /usr
+    - spec: cmake@3.23.1
+      prefix: /usr/tce
+    - spec: cmake@2.8.12.2
+      prefix: /usr
+    - spec: cmake@3.17.5
+      prefix: /usr
+    - spec: cmake@3.14.5
+      prefix: /usr/tcetmp
+  curl:
+    externals:
+    - spec: curl@7.61.1+gssapi+ldap+nghttp2
+      prefix: /usr
+    - spec: curl@7.29.0+ldap
+      prefix: /usr
+  cvs:
+    externals:
+    - spec: cvs@1.11.23
+      prefix: /usr
+  doxygen:
+    externals:
+    - spec: doxygen@1.8.14+graphviz~mscgen
+      prefix: /usr
+    - spec: doxygen@1.8.5+graphviz~mscgen
+      prefix: /usr
+  flex:
+    externals:
+    - spec: flex@2.6.1+lex
+      prefix: /usr
+    - spec: flex@2.5.37+lex
+      prefix: /usr
+  gettext:
+    externals:
+    - spec: gettext@0.19.8.1
+      prefix: /usr
+  git:
+    externals:
+    - spec: git@2.39.3+tcltk
+      prefix: /usr
+    - spec: git@1.8.3.1+tcltk
+      prefix: /usr
+    - spec: git@2.29.1+tcltk
+      prefix: /usr/tcetmp
+  git-lfs:
+    externals:
+    - spec: git-lfs@2.11.0
+      prefix: /usr/tce
+    - spec: git-lfs@2.12.0
+      prefix: /usr/tcetmp
+  gmake:
+    externals:
+    - spec: gmake@3.82
+      prefix: /usr
+    - spec: gmake@4.2.1
+      prefix: /usr/tcetmp
+  groff:
+    externals:
+    - spec: groff@1.22.3
+      prefix: /usr
+    - spec: groff@1.22.2
+      prefix: /usr
+  libtool:
+    externals:
+    - spec: libtool@2.4.6
+      prefix: /usr
+    - spec: libtool@2.4.2
+      prefix: /usr
+  m4:
+    externals:
+    - spec: m4@1.4.18
+      prefix: /usr
+    - spec: m4@1.4.16
+      prefix: /usr
+  perl:
+    externals:
+    - spec: perl@5.26.3+cpanm+opcode+open+shared+threads
+      prefix: /usr
+    - spec: perl@5.16.3+cpanm+opcode+open+shared+threads
+      prefix: /usr
+  pkgconf:
+    externals:
+    - spec: pkgconf@1.4.2
+      prefix: /usr
+  python:
+    externals:
+    - spec: python@3.9.12+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat+pythoncmd+readline+sqlite3+ssl+tix+tkinter+uuid+zlib
+      prefix: /p/vast1/fractale/descriptive-thrust/experiment/spack-bare-metal/spack-env
+    - spec: python@2.7.18+bz2+crypt+ctypes+dbm~lzma+nis+pyexpat~pythoncmd+readline+sqlite3+ssl~tkinter+uuid+zlib
+      prefix: /usr
+    - spec: python@2.7.18+bz2+crypt+ctypes+dbm~lzma+nis+pyexpat~pythoncmd+readline+sqlite3+ssl+tix+tkinter+uuid+zlib
+      prefix: /usr/tce
+    - spec: python@3.9.12+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat~pythoncmd+readline+sqlite3+ssl+tix+tkinter+uuid+zlib
+      prefix: /usr/tce
+    - spec: python@3.7.2+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat+pythoncmd+readline+sqlite3+ssl+tix+tkinter+uuid+zlib
+      prefix: /p/vast1/fractale/descriptive-thrust/experiment/spack-bare-metal/spack-env
+    - spec: python@2.7.5+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat+pythoncmd+readline+sqlite3+ssl+tix+tkinter+uuid+zlib
+      prefix: /usr
+    - spec: python@3.6.8+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat~pythoncmd+readline+sqlite3+ssl+tix+tkinter+uuid+zlib
+      prefix: /usr
+    - spec: python@2.7.16+bz2+crypt+ctypes+dbm~lzma+nis+pyexpat+pythoncmd+readline+sqlite3+ssl+tix+tkinter+uuid+zlib
+      prefix: /usr/tcetmp
+    - spec: python@3.7.2+bz2+crypt+ctypes+dbm+lzma+nis+pyexpat~pythoncmd+readline+sqlite3+ssl+tix+tkinter+uuid+zlib
+      prefix: /usr/tcetmp
+  sed:
+    externals:
+    - spec: sed@4.5
+      prefix: /usr
+    - spec: sed@4.2.2
+      prefix: /usr
+  subversion:
+    externals:
+    - spec: subversion@1.10.2
+      prefix: /usr
+    - spec: subversion@1.7.14
+      prefix: /usr
+  swig:
+    externals:
+    - spec: swig@3.0.12
+      prefix: /usr
+    - spec: swig@2.0.10
+      prefix: /usr
+  texinfo:
+    externals:
+    - spec: texinfo@6.5
+      prefix: /usr
+    - spec: texinfo@5.1
+      prefix: /usr
+  spectrum-mpi:
+    externals:
+    - spec: spectrum-mpi@2020.08.19%gcc@8.3.1 arch=linux-rhel7-power9le
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-2020.08.19-gcc-8.3.1
+    - spec: spectrum-mpi@2019.06.24%gcc@8.3.1 arch=linux-rhel7-power9le
+      prefix: /usr/tce/packages/spectrum-mpi/spectrum-mpi-2019.06.24-gcc-8.3.1
+    buildable: false
+  pkg-config:
+    externals:
+    - spec: pkg-config@0.27.1
+      prefix: /usr
