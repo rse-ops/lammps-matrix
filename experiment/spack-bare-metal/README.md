@@ -9,7 +9,18 @@ Let's clone spack and ensure we have compspec go.
 ```
 git clone https://github.com/compspec/compspec-go
 cd compspec-go
+
+# This builds for x86
 make
+
+# This builds for ppc (lassen)
+make build-ppc
+```
+
+Note that you should do all builds on quartz, where there is a newer Go. Lassen has an old go (1.15).
+
+```
+GO111MODULE="on" GOARCH=ppc64le /p/vast1/fractale/descriptive-thrust/software/go/bin/go build -o $(LOCALBIN)/compspec-ppc cmd/compspec/compspec.go
 ```
 
 Note that current versions of packages.yaml and compilers.yaml are provided in [config](config),
@@ -71,26 +82,171 @@ We are going to want to have compatibility metadata linked to specific hashes fo
 }
 ```
 
-
 ## Spack Builds
 
-Starting from the above:
+Starting from the above, we were able to built four variants of spack on Lassen, Corona, and Quartz:
 
 ```
-# Lassen
-spack install lammps ^mpich
+$ spack find --deps lammps
+-- linux-rhel7-power9le / xl@16.1 -------------------------------
+lammps@20230802.2
+    cmake@3.23.1
+    fftw@3.3.10
+    gmake@4.2.1
+    spectrum-mpi@2023.03.13
+
+lammps@20230802.2
+    cmake@3.23.1
+    cuda@11.8.0
+    fftw@3.3.10
+    gmake@4.2.1
+    spectrum-mpi@2023.03.13
+
+
+-- linux-rhel8-broadwell / gcc@12.1.1 ---------------------------
+lammps@20230802.2
+    cmake@3.26.5
+    fftw@3.3.10
+    gcc-runtime@12.1.1
+    gmake@4.2.1
+    openmpi@4.1.2
+
+
+-- linux-rhel8-broadwell / intel@2021.6.0 -----------------------
+lammps@20230802.2
+    cmake@3.26.5
+    fftw@3.3.10
+    gmake@4.4.1
+    mvapich2@2.3.7
+```
+
+Here are the specs for each:
+
+```
+# Quartz
+spack install lammps%intel@2021.6.0 ^mvapich2@2.3.7%intel@2021.6.0 ^fftw@3.3.10
+
+# Lassen (without and with CUDA)
+spack install lammps%xl@16.1 ^fftw@3.3.10%xl@16.1 ^spectrum-mpi@2023.03.13%xl@16.1 ^cmake@3.23.1
+spack install lammps%xl@16.1 +cuda cuda_arch=70 ^fftw@3.3.10%xl@16.1 ^spectrum-mpi@2023.03.13%xl@16.1 ^cmake@3.23.1 ^cuda@11.8.0 
 
 # Corona
-spack install lammps ^intel-oneapi-mpi
-
-# Quartz
-spack install lammps
-spack install openmpi@4.1.2%gcc@12.1.1 arch=linux-rhel8-broadwell
-spack install lammps%gcc@12.1.1 ^openmpi@4.1.2
+spack install lammps%gcc@gcc@12.1.1 ^cmake@3.26.5 ^fftw@3.3.10 ^gmake@4.4.1 ^mvapich2@2.3.7
 ```
 
-chmod -R g+rwx /p/vast1/fractale/descriptive-thrust
+## Host Environment
 
-Note that most of these didn't work. Godspeed.
-After we have builds we will use [extract-metadata.py](extract-metadata.py) to do that,
-and run experiments on some nodes.
+To add to the metadata extraction, we will generate a host `compspec-<host>.json` on each of lassen, quartz, and corona. Here is what that looks like (assuming you have built compspec as shown above):
+
+```
+mkdir -p ./hosts
+# On quartz
+compspec extract --out ./hosts/compspec-quartz.json
+
+# On lassen (a subset since we get permission errors with things)
+compspec-ppc extract --allow-fail --name nfd[cpu,memory,network,storage,system] --name system[processor,arch,memory] --out ./hosts/compspec-lassen.json
+compspec-ppc extract --out ./hosts/compspec-quartz.json
+
+# On corona
+compspec extract --out ./hosts/compspec-corona.json
+```
+
+## Metadata Extraction
+
+We can now generate artifacts for each! Here is how I did that. We are going to use [extract-metadata.py](extract-metadata.py) to do that:
+
+```bash
+# The only extra dependency you need.
+pip install pyyaml
+
+usage: extract-metadata.py [-h] [--spack-root SPACK_ROOT] [--package PACKAGE] [--compspec-json COMPSPEC] [--outdir OUTDIR]
+
+Extract Spack Metadata
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --spack-root SPACK_ROOT
+                        spack root
+  --package PACKAGE     package name to seach for
+  --compspec-json COMPSPEC
+                        host compatibility information
+  --outdir OUTDIR       output directory for results
+```
+
+Let's do the extraction. We are going to target specific binaries (that match to hosts) just by including a subset of the path.
+Note that this takes a little long on the filesystem, oups. Here is what I see in our install:
+
+```
+$ find . -name *lammps.h
+
+# This is lassen
+./linux-rhel7-power9le/xl-16.1/lammps-20230802.2-nof5qz5k6lrafqdd6bnzpu3va5hj6qbu/include/lammps/lammps.h
+./linux-rhel7-power9le/xl-16.1/lammps-20230802.2-thmw3hvmel7xuew7cipxtspzrsu7nxq3/include/lammps/lammps.h
+
+# This is quartz
+./linux-rhel8-broadwell/gcc-12.1.1/lammps-20230802.2-fuuonv3y4cddfswssbuse5jfp2cjmn7p/include/lammps/lammps.h
+./linux-rhel8-broadwell/intel-2021.6.0/lammps-20230802.2-rqspxlxcrxzhov5rlojh2rrus3x6mvbh/include/lammps/lammps.h
+
+# And corona?
+./linux-rhel8-zen2/gcc-10.3.1/lammps-20230802.2-l75zzkprajipt5e5daomwfyxe3meus3q/include/lammps/lammps.h
+```
+
+```console
+# This is just for future us to remember!
+mkdir -p ./specs/lassen ./specs/quartz ./specs/corona
+
+# Lassen
+# Note that I added system->arch->name->ppc64le because I haven't written a ppc extractor
+# I also added system->processor->0.target and 0.vendor because of same
+# And /etc/redhat-release for rhel 7.9
+# This is with/without cuda
+python extract-metadata.py \
+    --spack-root /p/vast1/fractale/descriptive-thrust/experiment/spack-bare-metal/spack  \
+    --compspec-json ./hosts/compspec-lassen.json \
+    --package lammps-20230802.2-nof5qz5k6lrafqdd6bnzpu3va5hj6qbu \
+    --package lammps-20230802.2-thmw3hvmel7xuew7cipxtspzrsu7nxq3
+    --outdir ./specs/lassen
+
+# Quartz
+python extract-metadata.py \
+    --spack-root /p/vast1/fractale/descriptive-thrust/experiment/spack-bare-metal/spack  \
+    --compspec-json ./hosts/compspec-quartz.json \
+    --package lammps-20230802.2-fuuonv3y4cddfswssbuse5jfp2cjmn7p \
+    --package lammps-20230802.2-rqspxlxcrxzhov5rlojh2rrus3x6mvbh \
+    --outdir ./specs/quartz
+
+# Corona
+python extract-metadata.py \
+    --spack-root /p/vast1/fractale/descriptive-thrust/experiment/spack-bare-metal/spack  \
+    --compspec-json ./hosts/compspec-corona.json \
+    --package lammps-20230802.2-l75zzkprajipt5e5daomwfyxe3meus3q \
+    --outdir ./specs/corona
+```
+
+This gives us the following specs. I think we can just use them locally (no need to push to a registry).
+
+```bash
+tree ./specs
+```
+```console
+tree specs/
+specs/
+├── corona
+│   └── lammps-20230802.2-l75zzkprajipt5e5daomwfyxe3meus3q.json
+├── lassen
+│   ├── lammps-20230802.2-nof5qz5k6lrafqdd6bnzpu3va5hj6qbu.json
+│   └── lammps-20230802.2-thmw3hvmel7xuew7cipxtspzrsu7nxq3.json
+└── quartz
+    ├── lammps-20230802.2-fuuonv3y4cddfswssbuse5jfp2cjmn7p.json
+    └── lammps-20230802.2-rqspxlxcrxzhov5rlojh2rrus3x6mvbh.json
+```
+
+## Experiments
+
+I think we likely want to:
+
+1. Write a dummy script that knows how to load the correct MPI, environment, etc. based on metadata. If there isn't metadata, we need to mock a "vanilla" unprepared environment.
+2. Test running N jobs of lammps with a `spack load <spec>` at varying levels of metadata.
+3. Try to save runtimes and show change with adding compatibility metadata.
+
+Going back to sleep for a bit.

@@ -6,6 +6,7 @@ import json
 import os
 import subprocess
 import shutil
+import re
 import fnmatch
 import random
 import sys
@@ -14,14 +15,8 @@ import yaml
 import json
 from datetime import datetime
 
-from jinja2 import Template
 
-here = os.path.dirname(os.path.abspath(__file__))
-compspec_json = os.path.join(here, "compspec-system.json")
-if not os.path.exists(compspec_json):
-    sys.exit(
-        "Please extract a compspec-system.json first: comspec extract --name system --out compspec-system.json"
-    )
+here = os.path.abspath(os.path.dirname(__file__))
 
 
 def write_json(content, filename):
@@ -118,7 +113,6 @@ template = {
                 "os.name": None,  # "Rocky Linux 9.3 (Blue Onyx)",
                 "os.release": None,  # "9.3",
                 "os.vendor": None,  # "rocky",
-                "os.version": None,  # "9.3"
             },
         },
         {
@@ -140,16 +134,20 @@ def run(args, outdir):
     """
     opt_dir = os.path.join(args.spack_root, "opt")
     packages = []
+    regex = "(%s)" % "|".join(args.package)
     for spec_file in recursive_find(opt_dir, "spec.json"):
-        if args.package not in spec_file:
+        if not re.search(regex, spec_file):
             continue
         packages.append(os.path.dirname(os.path.dirname(spec_file)))
     print(f"Found {len(packages)} package for {args.package}")
 
     # Load host compspec metadata
-    compspec = read_json(compspec_json)
+    compspec = read_json(args.compspec)
 
-    # For each, read in the spec.json and
+    # For each, read in the spec.json and get host metadata
+    # NOTE: this is an imperfect process, the extractor metadata is a WIP and hugely
+    # subject to change based on descisions of compatibility working group -
+    # assume that everything will change.
     for package in packages:
         spec = copy.deepcopy(template)
         spec_json = os.path.join(package, ".spack", "spec.json")
@@ -159,38 +157,34 @@ def run(args, outdir):
 
         # This isn't exactly right, but it matches what we did for kubernetes experiments
         spec["compatibilities"][0]["attributes"]["os.name"] = environ["host_os"]
-        spec["compatibilities"][1]["attributes"]["cpu.target"] = compspec["extractors"][
-            "system"
-        ]["sections"]["arch"]["name"]
+
+        arch_name = compspec["results"]["system"]["sections"]["arch"]["name"]
+        spec["compatibilities"][1]["attributes"]["cpu.target"] = arch_name
         spec["compatibilities"][1]["attributes"]["cpu.model"] = environ["host_target"]
 
-        spec["compatibilities"][1]["attributes"]["cpu.vendor"] = compspec["extractors"][
-            "system"
-        ]["sections"]["processor"]["0.vendor"]
-        spec["compatibilities"][1]["attributes"]["cpu.vendor"] = compspec["extractors"][
-            "system"
-        ]["sections"]["processor"]["0.target"]
+        system = compspec["results"]["system"]["sections"]["processor"]
+        spec["compatibilities"][1]["attributes"]["cpu.vendor"] = system["0.vendor"]
+        spec["compatibilities"][1]["attributes"]["cpu.target"] = arch_name
 
-        # hardware.gpu.available
+        nfd = compspec["results"]["nfd"]["sections"]["system"]
+        spec["compatibilities"][0]["attributes"]["os.release"] = nfd[
+            "osrelease.VERSION_ID"
+        ]
+        spec["compatibilities"][0]["attributes"]["os.vendor"] = nfd["osrelease.ID"]
 
-        spec["compatibilities"][0]["attributes"]["os.release"] = compspec["extractors"][
-            "system"
-        ]["sections"]["os"]["release"]
-        spec["compatibilities"][0]["attributes"]["os.vendor"] = compspec["extractors"][
-            "system"
-        ]["sections"]["os"]["vendor"]
-
-        # Get the specific MPI
+        # Get the specific MPI - if this is a virtual, won't be here
         mpi = [
             x
             for x in spack_spec["spec"]["nodes"][0]["dependencies"]
             if "mpi" in x["name"]
+            or "mpi" in x.get("parameters", {}).get("virtuals", [])
         ]
+        print(mpi)
         mpi = [x for x in spack_spec["spec"]["nodes"] if x["hash"] == mpi[0]["hash"]]
         spec["compatibilities"][0]["attributes"]["mpi.implementation"] = mpi[0]["name"]
-        spec["compatibilities"][0]["attributes"]["mpi.version"] = mpi[0]["version"]
+        spec["compatibilities"][0]["attributes"]["mpi.version"] = mpi[0].get("version")
 
-        # For now, don't add GPU
+        # hardware.gpu.available
         has_gpu = "no"
         test = [x["name"] for x in spack_spec["spec"]["nodes"] if "cuda" in x["name"]]
         if test:
@@ -225,6 +219,12 @@ def get_parser():
     parser.add_argument(
         "--package",
         help="package name to seach for",
+        action="append",
+    )
+    parser.add_argument(
+        "--compspec-json",
+        dest="compspec",
+        help="host compatibility information",
     )
     parser.add_argument(
         "--outdir",
@@ -242,8 +242,14 @@ def main():
     if not os.path.exists(args.spack_root):
         sys.exit(f"{args.spack_root} does not exist.")
 
+    if not args.compspec:
+        sys.exit(f"--compspec-json is required.")
+
+    if not os.path.exists(args.compspec):
+        sys.exit(f"{args.compspec} does not exist.")
+
     if not args.package:
-        sys.exit("Please provide the name of a package with --package")
+        sys.exit("Please provide the name of one or more packages with --package")
     outdir = os.path.abspath(args.outdir)
     try:
         run(args, outdir)
