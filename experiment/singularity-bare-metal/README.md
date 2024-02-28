@@ -46,6 +46,7 @@ flux run -N 1 --ntasks 48 -c 1 -o cpu-affinity=per-task singularity exec $contai
 I think we are going to need to do loads and binds associated with each mpi variant. This would be the next step here!
 Perhaps that is part of metadata?
 
+
 ```
 mpiA=/usr/tce/packages/openmpi/openmpi-4.1.2-intel-classic-2021.6.0-magic/lib/libmpi.so
 mpiB=/usr/lib/x86_64-linux-gnu/libmpi.so

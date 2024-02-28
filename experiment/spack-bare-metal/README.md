@@ -249,4 +249,23 @@ I think we likely want to:
 2. Test running N jobs of lammps with a `spack load <spec>` at varying levels of metadata.
 3. Try to save runtimes and show change with adding compatibility metadata.
 
-Going back to sleep for a bit.
+An approach?
+
+ - Write a script that just asks where a job (spack binary) *should* run and then vary the metadata and see how well we do (don't actually run anything) but see how well we do?
+
+Let's try that:
+
+```bash
+python simulate_runs.py --hosts-dir ./hosts --specs-dir ./specs
+```
+```console
+▶️  Output directory: /home/vanessa/Desktop/Code/lammps-matrix/experiment/spack-bare-metal/results
+▶️       Config name: ./specs
+▶️        Iterations: ./hosts
+🧪️ Experiments are finished. See output in /home/vanessa/Desktop/Code/lammps-matrix/experiment/spack-bare-metal/results
+```
+
+Then plot the results.
+
+```bash
+```
