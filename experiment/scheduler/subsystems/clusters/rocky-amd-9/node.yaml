@@ -1,0 +1,17 @@
+# ghcr.io/rse-ops/rainbow-flux-rocky:amd-9
+node:
+  subsystems:
+    mpi:
+      mpi.implementation: intel-mpi
+      mpi-version: "2021.8"
+    os:    
+      os.name: "Rocky Linux 9.3 (Blue Onyx)"
+      os.release: "9.3"
+      os.vendor: "rocky"
+      os.version: "9.3"
+    hardware:    
+      hardware.gpu.available: no
+    io.archspec:
+      cpu.model: "Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz"
+      cpu.target: "amd64"
+      cpu.vendor: "GenuineIntel

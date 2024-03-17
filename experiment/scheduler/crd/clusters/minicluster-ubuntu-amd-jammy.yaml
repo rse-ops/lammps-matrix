@@ -1,0 +1,32 @@
+apiVersion: flux-framework.org/v1alpha2
+kind: MiniCluster
+metadata:
+  name: ubuntu-amd-jammy
+spec:
+  size: 4
+  interactive: true
+  logging:
+    quiet: true
+  flux:
+    container:
+      image: ubuntu:jammy
+      disable: true
+  containers:
+    - image: ghcr.io/rse-ops/lammps-matrix:openmpi-ubuntu-22.04-amd64
+      environment:
+        CLUSTER_NAME: ubuntu-amd-jammy
+      # Needed for Singularity
+      securityContext:
+        privileged: true
+      workingDir: /opt/lammps
+      commands:
+        init: |
+          . /opt/spack-environment/activate.sh
+          python3 -m pip install rainbow-scheduler
+          git clone --depth 1 https://github.com/compspec/compspec-go /opt/compspec-go         
+          cd /opt/compspec-go && make && cp ./bin/compspec /usr/bin/compspec
+      resources:
+        limits:
+          cpu: "3"
+        requests:
+          cpu: "3"

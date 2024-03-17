@@ -1,0 +1,18 @@
+node:
+  subsystems:
+    mpi:
+      mpi.implementation: intel-mpi
+      mpi-version: "2021.8"
+    os:    
+      os.name: "Rocky Linux 8.9 (Green Obsidian)"
+      os.release: "8.9"
+      os.vendor: "rocky"
+      os.version: "8.9"
+    hardware:    
+      hardware.gpu.available: no
+    io.archspec:
+      cpu.model: "Intel(R) Xeon(R) Platinum 8259CL CPU @ 2.50GHz"
+      cpu.target: "amd64"
+      cpu.vendor: "GenuineIntel
+      
+
