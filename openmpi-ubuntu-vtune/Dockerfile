@@ -7,7 +7,6 @@ RUN apt-get update && \
         openmpi-bin openmpi-doc libopenmpi-dev \
         build-essential wget curl unzip
 
-# install laamps
 WORKDIR /opt/
 RUN git clone --depth 1 --branch stable_29Sep2021_update2 https://github.com/lammps/lammps.git /opt/lammps && \
     cd /opt/lammps && \
